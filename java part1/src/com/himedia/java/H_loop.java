@@ -114,6 +114,7 @@ public class H_loop {
         while ( cnt <= 10) {
             System.out.println(cnt);
             cnt++;
+
         }
     }
 
