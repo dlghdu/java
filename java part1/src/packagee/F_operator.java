@@ -1,4 +1,4 @@
-package com.himedia.java;
+package packagee;
 
 public class F_operator {
 }
