@@ -63,8 +63,48 @@ public class L_String {
         System.out.println(newStr);
     }
 
+    public static void exam8() {
+        String str = "Hello";
+        int idx = str.indexOf("1");
+        System.out.println(idx);
+        idx = str.lastIndexOf("1");
+        System.out.println(idx);
+    }
+
+    public static void exam9() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello");
+        sb.append("World");
+        String result = sb.toString();
+        System.out.println(result);
+    }
+
+    public static void exam10() {
+        String str = "Hello";
+        StringBuilder sb = new StringBuilder(str);
+        String reversed = sb.reverse().toString();
+        System.out.println(reversed);
+
+        System.out.println(new StringBuilder(str).reverse());
+    }
+
+    public static void exam11() {
+        String str1 = "apple";
+        String str2 = "banana";
+        int result = str1.compareTo(str2);
+        System.out.println(result);
+    }
+
+    public static void exam12() {
+        String str = "Hello World!";
+        String lower = str.toLowerCase();
+        String upper = str.toUpperCase();
+        System.out.println(lower);
+        System.out.println(upper);
+    }
+
     public static void main(String[] args) {
-        exam7();
+        exam12();
 
     }
 }
