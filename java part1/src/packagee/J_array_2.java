@@ -31,6 +31,8 @@ public class J_array_2 {
         }
     }
 
+
+
     public static void main(String[] args) {
         exam2();
     }
