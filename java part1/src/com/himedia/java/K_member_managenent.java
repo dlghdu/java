@@ -58,6 +58,8 @@ public class K_member_managenent {
         members[totalMemberCnt][0] = name;
         members[totalMemberCnt][1] = email;
         members[totalMemberCnt][2] = phone;
+
+        totalMemberCnt++;
     }
 
     public static boolean checkEmail(String[][] members, String email) {
@@ -115,7 +117,7 @@ public class K_member_managenent {
         // 값이 들어있는 친구들만 넘버링해서 출력해주세요.
         // 예) System.out.println(" 1. [이름] 홍길동, [이메일] abc@ddwod.com [연락처]010-1234-2131");
         for( int i = 0; i < totalMemberCnt; ++i) {
-            System.out.println((i + 1) +", [이름] " + members[i][0] + ", [이메일] " + members[i][1] + ", [연락처] " + members[i][2]);
+            System.out.println((i + 1) +". [이름] " + members[i][0] + ", [이메일] " + members[i][1] + ", [연락처] " + members[i][2]);
 
         }
 
@@ -168,7 +170,34 @@ public class K_member_managenent {
         // 3. 찾은 행 뒹의 행들을 모두 땡긴 후, 마지막 행은 NULL처리한다.
         // 4. 전체 회원수도 차감 시킨다. 0인 경우에는 실행 하지마오.
         Scanner sc = new Scanner(System.in);
+        System.out.println("이메일을 입력하세요.");
+        String email = sc.nextLine();
+        int idx = -1;
 
+        for ( int i = 0; i < totalMemberCnt; i++) {
+            if(email.equals(members[i][1])) {
+                idx = i;
+                break;
+            }
+        }
+
+        if(idx == -1) {
+            System.out.println("찾으시는 회원이 없습니다.");
+            return;
+        }
+
+        for ( int d = idx; d < totalMemberCnt; d++) {
+            members[d][0] = members[d + 1][0];
+            members[d][1] = members[d + 1][1];
+            members[d][2] = members[d + 1][2];
+        }
+
+        members[totalMemberCnt-1][0] = null;
+        members[totalMemberCnt-1][1] = null;
+        members[totalMemberCnt-1][2] = null;
+        totalMemberCnt--;
+
+        System.out.println("삭제 되었습니다.");
 
     }
 
