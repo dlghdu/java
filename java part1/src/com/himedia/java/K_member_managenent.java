@@ -174,30 +174,29 @@ public class K_member_managenent {
         String email = sc.nextLine();
         int idx = -1;
 
-        for ( int i = 0; i < totalMemberCnt; i++) {
+        for ( int i = 0; i < members.length; i++ ) {
             if(email.equals(members[i][1])) {
                 idx = i;
                 break;
             }
         }
 
-        if(idx == -1) {
+        if( idx == -1 ) {
             System.out.println("찾으시는 회원이 없습니다.");
             return;
         }
 
-        for ( int d = idx; d < totalMemberCnt; d++) {
-            members[d][0] = members[d + 1][0];
-            members[d][1] = members[d + 1][1];
-            members[d][2] = members[d + 1][2];
+        members[idx][0] = null;
+        members[idx][1] = null;
+        members[idx][2] = null;
+
+        for( int d = idx; d < members.length -1; d++) {
+            members[d][0] = members[d+1][0];
+            members[d][1] = members[d+1][1];
+            members[d][2] = members[d+1][2];
         }
 
-        members[totalMemberCnt-1][0] = null;
-        members[totalMemberCnt-1][1] = null;
-        members[totalMemberCnt-1][2] = null;
         totalMemberCnt--;
-
-        System.out.println("삭제 되었습니다.");
 
     }
 
