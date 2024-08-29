@@ -69,7 +69,7 @@ public class N_2_gwaje2 {
     }
 
     public static void allCheck(String[][] members) {
-        
+
     }
 
     public static void main(String[] args) {
