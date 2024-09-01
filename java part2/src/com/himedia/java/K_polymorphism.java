@@ -13,12 +13,32 @@ public class K_polymorphism {
         K_animal myCat = new K_cat(); // Cat 타입의 객체, Animal타입으로 업캐스팅
 
         animal.sound();
+        animal.action();
         myDog.sound();
+        myDog.action();
         myCat.sound();
+        myCat.action();
+        System.out.println("\n");
 
-        // 다운 캐스팅을 통해 다시 Dog타입으로 변환
-        K_dog myDog2 = (K_dog) animal;
-        myDog2.fetch();
+        K_animal ani1 = myDog; // 업캐스팅이 이건가?
+        K_animal ani2 = myCat; // 맞나?
+
+        // 다운 캐스팅을 통해 다시 Dog타입로 변환
+
+        if (ani1 instanceof K_dog) {
+            K_dog myDog2 = (K_dog) ani1;
+            myDog2.sound();
+            myDog2.action();
+        } else {
+            System.out.println("안되네");
+        }
+        if (ani2 instanceof K_cat) {
+            K_cat myCat2 = (K_cat) ani2;
+            myCat2.sound();
+            myCat2.action();
+        } else {
+            System.out.pr;
+        }
         // 과제 :Exception in thread "main" java.lang.ClassCastException: class com.himedia.java.K_animal cannot be cast to class com.himedia.java.K_dog (com.himedia.java.K_animal and com.himedia.java.K_dog are in unnamed module of loader 'app')
         //	at com.himedia.java.K_polymorphism.main(K_polymorphism.java:20)
         // 이거 왜 안되는지 알아보기 [과제]

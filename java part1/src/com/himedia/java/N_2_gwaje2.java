@@ -69,7 +69,13 @@ public class N_2_gwaje2 {
     }
 
     public static void allCheck(String[][] members) {
+<<<<<<< Updated upstream
 
+=======
+        for ( int i = 0; i < totalMemberCnt; i++) {
+                System.out.println("[이름]" + members[i][0] + ",[이메일]" + members[i][1] + ",[연락처]" + members[i][2]);
+        }
+>>>>>>> Stashed changes
     }
 
     public static void main(String[] args) {

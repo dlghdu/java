@@ -195,6 +195,6 @@ public class F_operator {
     }
 
     public static void main(String[] args) {
-        exam8();
+        exam9();
     }
 }

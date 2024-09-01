@@ -164,7 +164,7 @@ public class L_String {
     }
 
     public static void main(String[] args) {
-        exam4();
+        exam11();
     }
 
 }

@@ -1,5 +1,6 @@
 package packagee;
 
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -17,14 +18,14 @@ public class M_account {
     public static int historyIdx = -1;
 
     public static void printCreateAccountMenu() {
-        System.out.println("==계좌생성==");
+        System.out.println("==계좌 생성==");
         Scanner sc = new Scanner(System.in);
         System.out.println("이름을 입력하세요.");
 
         userName = sc.nextLine();
         userAccount = createAccountNum();
 
-        System.out.println("계좌가 생성되었습니다. [이름]" + userName + ", [계좌번호] " + userAccount);
+        System.out.println("계좌가 생성되었습니다. [이름] " + userName + ", [계좌번호] " + userAccount);
     }
 
     public static String createAccountNum() {
@@ -33,13 +34,15 @@ public class M_account {
         int idx = 0;
 
         while (idx < ACCOUNT_MAX_LENGTH) {
-            int tmp = (int) (Math.random() * 10);
+            int tmp = (int)(Math.random() * 10);
 
-            if (idx == 0 && tmp == 0) continue;
-            if (idx > 0 && checkDuplicateNum(accountNums, tmp, idx)) continue;
+            if ( idx == 0 && tmp == 0 ) continue;
+            if ( idx > 0 && checkDuplicateNum(accountNums, tmp, idx) ) continue;
+
             accountNums[idx++] = tmp;
         }
-        for ( int accountNum :accountNums ) {
+
+        for ( int accountNum : accountNums ) {
             sb.append(accountNum);
         }
         return sb.toString();
@@ -54,24 +57,13 @@ public class M_account {
         return false;
     }
 
-    public static int printMenu() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("==메뉴==");
-        System.out.println("[계좌번호] : " + userAccount + ". [이름] : " + userName);
-        System.out.println("[1]입금 [2]출금 [3]내역조회 [4]프로그램종료");
-        System.out.println("현재금액 - " + totalMoney + "원");
-        System.out.println("원하시는 메뉴를 선택하세요.");
-
-        return sc.nextInt();
-    }
-
     public static void addMoney() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("입금할 금액을 입력하세요.");
+        System.out.println("입금할 금액 입력");
         int getMoney = sc.nextInt();
         totalMoney += getMoney;
 
-        String historyMessage = "[입금]" + getMoney + "원";
+        String historyMessage = "[입금] " + getMoney + "원";
         manageHistory(historyMessage);
     }
 
@@ -79,30 +71,12 @@ public class M_account {
         historyIdx++;
 
         if(historyIdx >= HISTORY_MAX_LENGTH) {
-            for (int i = 0; i < HISTORY_MAX_LENGTH - 1; i++) {
+            for (int i = 0; i < HISTORY_MAX_LENGTH -1; i++) {
                 histories[i] = histories[i + 1];
             }
             historyIdx = HISTORY_MAX_LENGTH - 1;
         }
-
         histories[historyIdx] = message + " - " + getNowDateTime();
-
-    }
-
-    public static void subMoney() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("출금할 금액을 입력하세요.");
-        int subMoney = sc.nextInt();
-
-        if (subMoney > totalMoney) {
-            System.out.println("출금할 금액이 부족합니다.");
-            return;
-        }
-
-        totalMoney -= subMoney;
-
-        String historyMessage = "[출금] " + subMoney + "원";
-        manageHistory(historyMessage);
     }
 
     public static String getNowDateTime() {
@@ -110,29 +84,29 @@ public class M_account {
         return LocalDateTime.now().format(formatter);
     }
 
-    public static void printHistory() {
-        System.out.println("==내역조회==");
-        for (int i = historyIdx; i >= 0; i--) {
-            if (histories[i] == null) continue;
-            System.out.println(histories[i]);
-        }
+    public static int printMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("========== 메뉴 ==========");
+        System.out.println("[계좌번호] : " + userAccount + ", [이름] : " + userName);
+        System.out.println("[1]입금 [2]출금 [3]내역조회 [4]프로그램종료");
+        System.out.println("현재금액 - " + totalMoney + "원");
+        System.out.println("원하시는 메뉴를 선택하세요.");
+
+        return sc.nextInt();
     }
+
 
     public static void main(String[] args) {
         printCreateAccountMenu();
-
 
         while (true) {
             int choice = printMenu();
             switch (choice) {
                 case 1:
-                    addMoney();
                     break;
                 case 2:
-                    subMoney();
                     break;
                 case 3:
-                    printHistory();
                     break;
                 case 4:
                     System.out.println("이용해주셔서 감사합니다.");
@@ -140,4 +114,5 @@ public class M_account {
             }
         }
     }
+
 }

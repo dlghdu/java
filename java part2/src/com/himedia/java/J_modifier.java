@@ -12,4 +12,7 @@ package com.himedia.java;
 // * 각 접근 제어자에 맞는 예제 코드를 찾아서 한 번 만들어보자.[과제]
 
 public class J_modifier {
+    public static void main(String[] args) {
+
+    }
 }
