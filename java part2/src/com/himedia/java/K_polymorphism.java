@@ -37,7 +37,7 @@ public class K_polymorphism {
             myCat2.sound();
             myCat2.action();
         } else {
-            System.out.pr;
+            System.out.println(" 않의;;;; 웨 안돼즤.... ");
         }
         // 과제 :Exception in thread "main" java.lang.ClassCastException: class com.himedia.java.K_animal cannot be cast to class com.himedia.java.K_dog (com.himedia.java.K_animal and com.himedia.java.K_dog are in unnamed module of loader 'app')
         //	at com.himedia.java.K_polymorphism.main(K_polymorphism.java:20)
