@@ -199,7 +199,7 @@ public class A_collections_list {
     }
 
     public static void main(String[] args) {
-        exam3();
+        exam2();
     }
 
 }
