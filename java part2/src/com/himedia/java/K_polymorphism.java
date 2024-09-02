@@ -37,13 +37,12 @@ public class K_polymorphism {
             myCat2.sound();
             myCat2.action();
         } else {
-            System.out.println(" 않의;;;; 웨 안돼즤.... ");
+            System.out.println(" 않의;;;; 웨 안뒈즤.... ");
         }
         // 과제 :Exception in thread "main" java.lang.ClassCastException: class com.himedia.java.K_animal cannot be cast to class com.himedia.java.K_dog (com.himedia.java.K_animal and com.himedia.java.K_dog are in unnamed module of loader 'app')
         //	at com.himedia.java.K_polymorphism.main(K_polymorphism.java:20)
-        // 이거 왜 안되는지 알아보기 [과제]
+        // 이거 왜 안되는지 알아보기 [과제] WA!! 섬곰!!
     }
-
 }
 
 // 이것이 다형성이다. 하나의 타입으로 다양하게 표현할 수 있는 것.
