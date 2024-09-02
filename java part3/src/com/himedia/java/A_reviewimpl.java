@@ -45,16 +45,52 @@ public class A_reviewimpl implements A_review {
 
     @Override
     public void selAll() {
-        for ( String key : contentMap.keySet() ) {
+        for (String key : contentMap.keySet()) {
             System.out.println(key + ":" + contentMap.get(key) + "\t" + likeMap.get(key));
         }
+    }
 
+    @Override
+    public void highLike() {
+        selAll();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("ID를 입력하세요.");
+        String name = sc.nextLine().trim();
 
-
-
-        private boolean checkString(String str) {
-            return str.length() == 0 ? false : true;
+        if (!checkString(name)) {
+            System.out.println("ID를 입력하지 않았습니다.");
+            return;
         }
+
+        if (likeMap.containsKey(name)) {
+            likeMap.put(name, likeMap.get(name) + 1);
+        } else {
+            System.out.println("ID를 잘 못 입력하셨습니다.");
+        }
+    }
+
+    @Override
+    public void deletE() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("ID를 입력하세요.");
+        String name = sc.nextLine().trim();
+
+        if (!checkString(name)) {
+            System.out.println("ID를 입력하지 않았습니다.");
+            return;
+        }
+
+        if (contentMap.containsKey(name)) {
+            contentMap.remove(name);
+            likeMap.remove(name);
+        } else {
+            System.out.println("찾으시는 ID가 없습니다.");
+        }
+    }
+
+    private boolean checkString(String str) {
+            return str.length() == 0 ? false : true;
+
     }
 }
 

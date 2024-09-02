@@ -12,10 +12,13 @@ public class A_start {
                     likey.plusMent();
                     break;
                 case 2:
+                    likey.highLike();
                     break;
                 case 3:
+                    likey.selAll();
                     break;
                 case 4:
+                    likey.deletE();
                     break;
                 case 5:
                     System.out.println("잘가");

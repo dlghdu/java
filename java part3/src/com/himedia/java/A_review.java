@@ -5,4 +5,6 @@ public interface A_review {
     void plusMent();
     void dataIn(String id, String sogae, int likeCnt);
     void selAll();
+    void highLike();
+    void deletE();
 }
