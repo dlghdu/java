@@ -1,6 +1,5 @@
 package com.himedia.java;
 
-import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -111,8 +110,8 @@ public class A_accountimpl implements A_account {
         System.out.println("==== 내역조회 ====");
         histories.sort(Comparator.reverseOrder());
         for ( String h : histories ) {
-                System.out.println(h);
-            }
+            System.out.println(h);
+        }
     }
 
     @Override
