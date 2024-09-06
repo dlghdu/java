@@ -4,5 +4,7 @@ public interface AccountBook {
     int printMenu();
     void plusNeuk();
     void printHistory();
-    String DateTime();
+    String dateTime();
+    void allClear();
+    void neukClear();
 }

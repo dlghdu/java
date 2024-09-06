@@ -25,7 +25,7 @@ start
 - 제목을 입력한 날짜와 내역을 삭제
 
 4. 내역 삭제
-- 내역들 중 특정 항목을삭제 시킬 수 있다.
+- 내역들 중 특정 항목을 삭제 시킬 수 있다.
 
 5. 프로그램 종료
 ---------------------------------------------------------------------------------------------------
@@ -72,8 +72,10 @@ public class Start {
                     gagebu.printHistory();
                     break;
                 case 3:
+                    gagebu.allClear();
                     break;
                 case 4:
+                    gagebu.neukClear();
                     break;
                 case 5:
                     System.out.println("가계부를 닫았다.");
