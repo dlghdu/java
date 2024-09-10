@@ -58,12 +58,20 @@ public class AccountBookimpl implements AccountBook {
         toDay = dateTime();
         System.out.println("내역조회");
         for ( int i = 0; i < list.size(); i++) {
-            System.out.println(toDay);
+            System.out.println(toDay + list.get(i));
             Scanner sc = new Scanner(System.in);
             System.out.println("제목을 입력하십시오.");
             eleMent = sc.nextLine();
+            eleMent += list.get(i);
             System.out.println(list.get(i) + " : " + eleMent);
         }
+        ListIterator<String> iterator = list.listIterator();
+        while (iterator.hasNext()) {
+            String element = iterator.next();
+            System.out.println(element);
+        }
+        System.out.println(eleMent);
+
     }
 
     @Override
@@ -77,8 +85,8 @@ public class AccountBookimpl implements AccountBook {
     public void allClear() {
         Scanner sc = new Scanner(System.in);
         System.out.println("제목을 입력하십시오.");
-        eleMent = sc.nextLine();
-        if (list.contains(eleMent)) {
+        String jemok = sc.nextLine();
+        if (eleMent.equals(jemok)) {
             System.out.println("존재합니다.");
         } else {
             System.out.println("안존재합니다.");
