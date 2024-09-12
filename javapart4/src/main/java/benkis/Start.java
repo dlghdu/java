@@ -5,17 +5,20 @@ import java.io.UnsupportedEncodingException;
 
 public class Start {
     public static void main(String[] args) {
+
         try {
             System.setOut(new PrintStream(System.out,true, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+
         Notice notice = new Noticeimpl();
 
         while(true) {
             int choice = notice.printMenu();
             switch (choice) {
                 case 1:
+
                     notice.login();
                     break;
                 case 2:

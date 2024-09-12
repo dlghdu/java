@@ -5,4 +5,5 @@ public interface Notice {
     void signup();
     void login();
     void riwrite();
+
 }

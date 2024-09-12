@@ -1,10 +1,15 @@
 package com.himedia.java;
 
 public interface Member {
-    void paySys();
+    void printPricePlan();
     int printMenu();
     void addMember();
-    void checkEmail();
-    void checkName();
-    void checkAll();
+    boolean checkEmail(String email);
+    void selectEmail();
+    void selectName();
+    void selectAll();
+    void updateMember();
+    void deleteMember();
+    void updatePricePlan(int planNum);
+    void initMember();
 }
