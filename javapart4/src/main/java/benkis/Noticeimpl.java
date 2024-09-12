@@ -1,9 +1,6 @@
 package benkis;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -17,7 +14,7 @@ public class Noticeimpl implements Notice {
     public Connection connection() {
         String url = "jdbc:mysql://localhost:3306/Notice";
         String user = "root";
-        String password = "1234";
+        String password = "akdptmzbdpf10299!!";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -131,11 +128,12 @@ public class Noticeimpl implements Notice {
         @Override
         public void riwrite() {
             if (USERID != 0) {
-                int number = 1;
                 Scanner sc = new Scanner(System.in);
+                System.out.println("몇번째 책갈피인가요");
+                int number = sc.nextInt();
                 System.out.println("제목을 정해주세요");
                 String title = sc.next();
-                System.out.println("제목을 정해주세요");
+                System.out.println("내용을 적어주세요");
                 String neong = sc.next();
                 String date = getNowDateTime();
                 insertData(number, title, neong, date);
@@ -148,5 +146,30 @@ public class Noticeimpl implements Notice {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             return LocalDateTime.now().format(formatter);
         }
+
+    @Override
+    public void showall() {
+        String query = "SELECT NUMBER, TITLE, NEONG, DATE FROM Content";
+
+        try (
+                Connection conn = connection();
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+        ) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int NUMBER = resultSet.getInt("NUMBER");
+                String TITLE = resultSet.getString("TITLE");
+                String NEONG = resultSet.getString("NEONG");
+                String DATE = resultSet.getString("DATE");
+
+                System.out.println(NUMBER + " : " + TITLE + " : " + NEONG + " : " + DATE);
+                System.out.println("============================");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+}
 

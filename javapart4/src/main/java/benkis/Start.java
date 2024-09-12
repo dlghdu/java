@@ -18,13 +18,13 @@ public class Start {
             int choice = notice.printMenu();
             switch (choice) {
                 case 1:
-
                     notice.login();
                     break;
                 case 2:
                     notice.signup();
                     break;
                 case 3:
+                    notice.showall();
                     break;
                 case 4:
                     notice.riwrite();
@@ -60,22 +60,27 @@ use Notice;
 show tables;
 
 CREATE TABLE USER (
-                      USERID varchar(20),
+                      USERID int auto_increment primary key,
                       PASSWORD varchar(20),
                       AGE int(30),
-                      USERNAME varchar(20),
+                      USERNAME varchar(5) not null,
                       PHONE varchar(15)
 );
 
 CREATE TABLE Content (
-                    NUMBER int auto_increment primary key,
-                    TITLE varchar(20),
-                    NEONG varchar(50),
-                    DATE varchar(10)
+                         NUMBER int auto_increment primary key,
+                         TITLE varchar(20),
+                         NEONG varchar(50),
+                         DATE varchar(20) not null
 );
 
-alter table USER modify column USERID int auto_increment primary key;
-alter table USER modify column USERNAME varchar(5) not null;
+SELECT * FROM Content;
 
 SELECT * FROM USER;
+
+drop table Content;
+
+ALTER TABLE USER MODIFY USERNAME varchar(10) not null;
+
+ALTER TABLE USER MODIFY AGE int(99);
  */
