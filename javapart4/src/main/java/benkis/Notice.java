@@ -6,4 +6,5 @@ public interface Notice {
     void login();
     void riwrite();
     void showall();
+    void fixwrite(int NUMBER, String TITLE, String NEONG);
 }

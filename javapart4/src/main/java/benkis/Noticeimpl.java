@@ -11,10 +11,12 @@ public class Noticeimpl implements Notice {
     private String USERNAME;
 
 
+
+
     public Connection connection() {
         String url = "jdbc:mysql://localhost:3306/Notice";
         String user = "root";
-        String password = "akdptmzbdpf10299!!";
+        String password = "1234";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -50,7 +52,7 @@ public class Noticeimpl implements Notice {
     }
 
     public void insertData(int NUMBER, String TITLE, String NEONG, String DATE) {
-        String query = "INSERT INTO Content (NUMBER, TITLE, NEONG, DATE) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO Content (NUMBER, TITLE, NEONG, DATE) VALUES ( ?, ?, ?)";
 
         try (
                 Connection conn = connection();
@@ -84,87 +86,117 @@ public class Noticeimpl implements Notice {
         }
 
 
-        @Override
-        public void signup() {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("아이디를 입력해주세요");
-            int userid = sc.nextInt();
-            System.out.println("비밀번호를 입력해주세요");
-            String password = sc.next();
-            System.out.println("이름을 입력해주세요");
-            String username = sc.next();
-            System.out.println("나이를 입력해주세요");
-            int age = sc.nextInt();
-            System.out.println("번호를 입력해주세요");
-            String phone = sc.next();
-            USERID += userid;
-            PASSWORD += password;
-            USERNAME = username;
+    @Override
+    public void signup() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("아이디를 입력해주세요");
+        int userid = sc.nextInt();
+        System.out.println("비밀번호를 입력해주세요");
+        String password = sc.next();
+        System.out.println("이름을 입력해주세요");
+        String username = sc.next();
+        System.out.println("나이를 입력해주세요");
+        int age = sc.nextInt();
+        System.out.println("번호를 입력해주세요");
+        String phone = sc.next();
+        USERID = userid;
+        PASSWORD = password;
+        USERNAME = username;
 
 
-            System.out.println("회원가입에 성공하였습니다.");
-            insertData(userid, password, age, username, phone);
+        System.out.println("회원가입에 성공하였습니다.");
+        insertData(userid, password, age, username, phone);
 
-        }
+    }
 
-        @Override
-        public void login() {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("아이디를 입력해주세요");
-            int userid = sc.nextInt();
-            System.out.println("비밀번호를 입력해주세요");
-            String password = sc.next();
+    @Override
+    public void login() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("아이디를 입력해주세요");
+        int userid = sc.nextInt();
+        System.out.println("비밀번호를 입력해주세요");
+        String password = sc.next();
 
 
-            if (userid == USERID) {
-                if (password.equals(password)) {
-                    System.out.println(USERNAME + " 로그인에 성공하였습니다.");
-                }
-            } else {
-                System.out.println("다시 하십시오");
+        if (userid == USERID) {
+            if (password.equals(password)) {
+                System.out.println(USERNAME + " 로그인에 성공하였습니다.");
             }
+        } else {
+            System.out.println("다시 하십시오");
+        }
+    }
+
+    @Override
+    public void riwrite() {
+        if (USERID != 0) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("몇번째 인가요");
+            int number = sc.nextInt();
+            System.out.println("제목을 정해주세요");
+            String title = sc.next();
+            System.out.println("내용을 적어주세요");
+            String neong = sc.next();
+            String date = getNowDateTime();
+            insertData(number, title, neong, date);
+        } else {
+            return;
+        }
+    }
+
+    public String getNowDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().format(formatter);
+    }
+
+    @Override
+    public void showall() {
+    String query = "SELECT NUMBER, TITLE, NEONG, DATE FROM Content";
+
+    try (
+            Connection conn = connection();
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+    ) {
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            int NUMBER = resultSet.getInt("NUMBER");
+            String TITLE = resultSet.getString("TITLE");
+            String NEONG = resultSet.getString("NEONG");
+            String DATE = resultSet.getString("DATE");
+
+            System.out.println(NUMBER + " [" + USERNAME +  "] " + TITLE + " : " + NEONG + " : " + DATE);
+            System.out.println("============================");
         }
 
-        @Override
-        public void riwrite() {
-            if (USERID != 0) {
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+}
+
+    @Override
+    public void fixwrite(int NUMBER, String TITLE, String NEONG) {
+        if (USERID != 0) {
+            showall();
+        }
+        String query = "UPDATE Content SET TITLE, NEONG FROM Content WHERE NUMBER = ?";
+
+        Connection conn = connection();
+        try (
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+        ) {
+
+            preparedStatement.setString(1, TITLE);
+            preparedStatement.setString(2, NEONG);
+            preparedStatement.setInt(3, NUMBER);
+
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
                 Scanner sc = new Scanner(System.in);
-                System.out.println("몇번째 책갈피인가요");
-                int number = sc.nextInt();
                 System.out.println("제목을 정해주세요");
                 String title = sc.next();
                 System.out.println("내용을 적어주세요");
                 String neong = sc.next();
-                String date = getNowDateTime();
-                insertData(number, title, neong, date);
-            } else {
-                return;
-            }
-        }
-
-        public String getNowDateTime() {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            return LocalDateTime.now().format(formatter);
-        }
-
-    @Override
-    public void showall() {
-        String query = "SELECT NUMBER, TITLE, NEONG, DATE FROM Content";
-
-        try (
-                Connection conn = connection();
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
-        ) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int NUMBER = resultSet.getInt("NUMBER");
-                String TITLE = resultSet.getString("TITLE");
-                String NEONG = resultSet.getString("NEONG");
-                String DATE = resultSet.getString("DATE");
-
-                System.out.println(NUMBER + " : " + TITLE + " : " + NEONG + " : " + DATE);
-                System.out.println("============================");
             }
 
         } catch (SQLException e) {

@@ -141,7 +141,7 @@ public class A_jdbc {
 //        jdbc.insertData("Paul", 13, "010-1111-2222");
         jdbc.updateData(2, "Sally", 13, "010-1111-2222");
         jdbc.selectOne(2);
-//        jdbc.deleteData(8);
+        jdbc.deleteData(6);
         jdbc.selectAll();
     }
 }

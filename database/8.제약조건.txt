@@ -1,0 +1,136 @@
+* 제약조건(Constraint)
+테이블에 저장할 데이터를 제약하는 특수한 규칙을 뜻한다.
+데이터베이스에서 사용하는 제약조건은 테이블의 특정 열에 지정한다.
+제약조건을지정한 열에 제약 조건에 부합하는 데이터를 저장할 수 없다.
+
+- NOT NULL: 지정한 열에 NULL을 허용하지 않는다.
+NULL을 제외한 데이터의 중복은 허용된다.
+
+- UNIQUE: 지정한 열이 유일한 값을 가져야 한다.
+즉, 중복될 수 없다.
+단 NULL은 값의 중복에서 제외.
+
+-PRIMARY KEY: 지정한 열이 유일한 값이면서 NULL을 허용하지 않는다.(UNIQUE + NOT NULL)이라 생각하면 될거 같다.
+
+-FOREIGN KEY: 다른 테이블의 열을 참조하여 존재하는 값만 입력 가능
+
+- CHECK: 설정한 조건식을 만족하는 데이터만 입력 가능
+
+* 데이터 무결성?
+데이터베이스에 저장되는 데이터의 정확성과 일관성을 보장한다는 의미이며, 이를 위해 항상 유지해야 하는 기본 규칙을 가진다.
+제약조건은 이러한 데이터 무결성을 지키기 위한 장치로서 중요한 역할을 한다.
+그리고 테이블의 데이터 삽입(INSERT), 수정(UPDATE), 삭제(DELETE) 등 모든 과정에서 지켜야 한다.
+
+- 무결성의 종류
+1.영역 무결성: 열에 저장되는 값의 적정 여부를 확인.
+자료형, 적절한 형식의 데이터, NULL여부같은 정해 놓은 범위를 만족하는 데이터임을 규정
+
+2.객체 무결성: 테이블 데이터를 유일하게 식별할 수 있는 기본키는 반드시 값을 가지고 있어야 하며 NULL이 될 수 없고 중복될 수 없다.
+
+3.참조 무결성: 참조 테이블의 외래키 값은 참조 테이블의 기본키로서 존재해야 하며, NULL이 가능.
+
+이러한 무결성을 보장하기 위해 데이터베이스에서는 다섯 가지 제약 조건을 제공한다. 제약조건은 데이터베이스 설계시점, 즉 테이블을 생성할 때 주로 지정한다.
+
+* NOY NULL: 빈 값을 허락하지 않는다.
+CREATE TABLE table_notnull(
+	LOGIN_ID VARCHAR(20) NOT NULL,
+	LOGIN_PW VARCHAR(20) NOT NULL
+);
+
+문제) ID:1004/ PW:1234 INSERT
+INSERT INTO table_notnull VALUES (1004, 1234);
+
+문제) TEL VARCHAR(2)컬럼 table_notnull에 추가
+alter table table_notnull add TEL VARCHAR(2);
+
+문제) TEL VARCHAR(2)컬럼 PHONE 타입 VARCHAR(20)로 변경
+ALTER TABLE table_notnull CHANGE TEL PHONE VARCHAR(2);
+alter table table_notnull MODIFY PHONE VARCHAR(20);
+
+* UNIQUE: 중복된 값을 허용하지 않음
+CREATE TABLE table_unique(
+	LOGIN_ID VARCHAR(20) UNIQUE,
+        LOGIN_PW VARCHAR(20) NOT NULL,
+	PHONE VARCHAR(20)
+);
+
+-> INSERT INTO table_unique VALUES (NULL, '1234', '4321');
+
+-> INSERT INTO table_unique VALUES ('1004', '1111', '1111');
+
+INSERT INTO table_unique VALUES( '1004', '222', '2222');
+// 에러발생 : Duplicate entry '1004' for key 'table_unique. LOGIN_ID'
+
+* PRIMARY KEY: 유일하게 하나만 있는 값
+제약 조건은 UNIQUE와 NOT NULL의 제약 조건 특성을 모두 가지고 있는 제약조건이다.
+즉 데이터 중복을 허용하지 않고 NULL도 허용하지 않는다.
+NULL이 아닌 유일한 값을 가지므로 주민등록번호나 EMP테이블의 사원번호 같이 테이블의 각 행을 식별하는데 사용한다.
+
+CREATE TABLE table_pk(
+	LOGIN_ID VARCHAR(20) PRIMARY KEY,
+        LOGIN_PW VARCHAR(20) NOT NULL
+);
+
+* FOREIGN KEY: 다른 테이블과 관계를 맺는 외래키, 외부키라고도 부르는 FOREIGN KEY는 서로 다른 테이블 간 관계를 정의하는 제약조건이다.
+특정 테이블에서 PRIMARY KEY 제약조건을 지정한 열을 다른 테이블의 특정 열에서 참조하겠다는 의미로 지정할 수 있다.
+
+CREATE TABLE DEPT_FK(
+	DEPTNO INT(2) NOT NULL,
+	DNAME VARCHAR(14),
+	LOC VARCHAR(13),
+	PRIMARY KEY(deptno)
+);
+
+CREATE TABLE EMP_FK(
+	EMPNO INT(4) PRIMARY KEY,
+	ENAME VARCHAR(10),
+	JOB VARCHAR(9),
+	DEPTNO INT(2),
+	CONSTRAINT FK_DEPTNO FOREIGN KEY (deptno) REFERENCES DEPT_FK(deptno)
+);
+
+--DEPT_FK
+INSERT INTO DEPT_FK (DEPTNO, DNAME, LOC) VALUES (10, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO DEPT_FK (DEPTNO, DNAME, LOC) VALUES (20, 'RESEARCH', 'DALLAS');
+INSERT INTO DEPT_FK (DEPTNO, DNAME, LOC) VALUES (30, 'SALES', 'CHICHAGO');
+INSERT INTO DEPT_FK (DEPTNO, DNAME, LOC) VALUES (40, 'OPERATIONS', 'BOSTON');
+
+- EMP_FK
+INSERT INTO EMP_FK (EMPNO, ENAME, JOB, DEPTNO)
+VALUES (7839, 'KING', 'PRESIDENT', 10);
+
+INSERT INTO EMP_FK (EMPNO, ENAME, JOB, DEPTNO)
+VALUES (7566, 'JONES', 'MANAGER', 20);
+
+INSERT INTO EMP_FK (EMPNO, ENAME, JOB, DEPTNO)
+VALUES (7698, 'BLAKE', 'MANAGER', 30);
+
+INSERT INTO EMP_FK (EMPNO, ENAME, JOB, DEPTNO)
+VALUES (7782, 'CLARK', 'MANAGER', 10);
+
+
+-> INSERT INTO EMP_FK (EMPNO, ENAME, JOB, DEPTNO)
+VALUES (7782, 'CLARK2', 'MANAGER', 10);
+
+-> INSERT INTO EMP_FK (EMPNO, ENAME, JOB, DEPTNO)
+VALUES (9998, 'CLARK2', 'MANAGER', 50);
+
+-> DELETE FROM DEPT_FK WHERE DEPTNO = 10;(실패)
+
+-> DELETE FROM EMP_FK WHERE DEPTNO = 10;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -30,6 +30,7 @@ public class Start {
                     notice.riwrite();
                     break;
                 case 5:
+                    notice.fixwrite();
                     break;
                 case 6:
                     break;
@@ -81,6 +82,40 @@ SELECT * FROM USER;
 drop table Content;
 
 ALTER TABLE USER MODIFY USERNAME varchar(10) not null;
-
 ALTER TABLE USER MODIFY AGE int(99);
- */
+*/
+
+/*
+show databases;
+
+CREATE DATABASE Notice
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+use Notice;
+
+show tables;
+
+CREATE TABLE USER (
+        ID int auto_increment primary key,
+        USERID varchar(10) not null unique,
+PASSWORD varchar(20) not null,
+AGE int(99),
+USERNAME varchar(10) not null,
+PHONE varchar(15)
+);
+
+CREATE TABLE Content (
+        NUMBER int auto_increment primary key,
+        TITLE varchar(10) not null,
+NEONG varchar(20) not null,
+DATE varchar(20) not null
+        );
+
+SELECT * FROM Content;
+
+SELECT * FROM USER;
+
+drop table USER;
+drop table Content;
+*/
