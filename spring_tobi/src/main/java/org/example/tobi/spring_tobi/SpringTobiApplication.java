@@ -1,8 +1,11 @@
 package org.example.tobi.spring_tobi;
 
-import ex_1_3.dao.DConnectionMaker;
-import ex_1_3.dao.UserDao;
-import ex_1_3.domain.User;
+import org.example.tobi.spring_tobi.ex_1_5.dao.CountingDaoFactory;
+import org.example.tobi.spring_tobi.ex_1_5.dao.DConnectionMaker;
+import org.example.tobi.spring_tobi.ex_1_5.dao.UserDao;
+import org.example.tobi.spring_tobi.ex_1_5.domain.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -13,23 +16,19 @@ public class SpringTobiApplication {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         setCharacter();
 
-        UserDao dao = new UserDao(new DConnectionMaker());
+        ApplicationContext context = new AnnotationConfigApplicationContext((CountingDaoFactory.class));
 
+        UserDao dao = context.getBean("userDao", UserDao.class);
         User user = new User();
-        user.setId("tobi3");
-        user.setName("Tobi");
-        user.setPassword("1234");
+        user.setId("32100");
+        user.setName("123");
+        user.setPassword("4321");
 
         dao.add(user);
 
-        System.out.println(user.getId() + " 등록성공!");
-        
-        User getUser = dao.get(user.getId());
+        User user1 = dao.get(user.getId());
+        System.out.println("aa " + user1.getName());
 
-        System.out.println(getUser.getName());
-        System.out.println(getUser.getPassword());
-
-        System.out.println(getUser.getId() + " 조회 성공");
     }
 
     private static void setCharacter() {

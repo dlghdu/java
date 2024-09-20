@@ -1,25 +1,26 @@
-package ex_1_1.dao;
+package org.example.tobi.spring_tobi.ex_1_3.dao;
 
-import ex_1_1.domain.User;
+import org.example.tobi.spring_tobi.ex_1_3.domain.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public abstract class UserDao {
+public class AccountDao {
 
-//    private Connection getConnection() throws SQLException, ClassNotFoundException {
-//        String URL = "jdbc:mysql://localhost:3306/spring_tobi";
-//        String USER = "root";
-//        String PASSWORD = "1234";
-//
-//        Class.forName("com.mysql.cj.jdbc.Driver"); // forName 빨간 색일 때 alt-enter해서 throws Class... 하기
-//        return DriverManager.getConnection(URL, USER, PASSWORD); // getConnection도 빨간 색일 때 위와 동일 SQL로
-//    }
+    //    private simpleConnectionMaker simpleConnectionMaker;
+    private ConnectionMaker connectionMaker;
 
-    public abstract Connection getConnection() throws SQLException, ClassNotFoundException;
+    public AccountDao(ConnectionMaker connectionMaker) {
+//        simpleConnectionMaker = new simpleConnectionMaker();
+//        connectionMaker = new DConnectionMaker(); // 구체 클래스
+        this.connectionMaker = connectionMaker;
+    }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
 
-        Connection conn = getConnection();
+        Connection conn = connectionMaker.makenewConnection();
         PreparedStatement ps = conn.prepareStatement("insert into users(id, name, password) values(?,?,?)");
         // ; 뒤에서 ctrl+alt+v 하면 뒤에 뭐가 만들어진다.
 
@@ -35,7 +36,7 @@ public abstract class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
 
-        Connection conn = getConnection();
+        Connection conn = connectionMaker.makenewConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
 
         ps.setString(1, id);
@@ -54,5 +55,4 @@ public abstract class UserDao {
 
         return user;
     }
-
 }

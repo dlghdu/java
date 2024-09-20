@@ -1,4 +1,4 @@
-package ex_1_3.domain;
+package practice.e1.domain;
 
 public class User {
 

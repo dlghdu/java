@@ -1,4 +1,4 @@
-package ex_1_1.dao;
+package org.example.tobi.spring_tobi.ex_1_1.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
