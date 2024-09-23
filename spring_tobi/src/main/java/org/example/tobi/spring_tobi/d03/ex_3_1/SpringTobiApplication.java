@@ -1,4 +1,4 @@
-package org.example.tobi.spring_tobi;
+package org.example.tobi.spring_tobi.d03.ex_3_1;
 
 import org.example.tobi.spring_tobi.d01.ex_1_5.dao.CountingDaoFactory;
 import org.example.tobi.spring_tobi.d03.ex_3_1.dao.UserDao;
