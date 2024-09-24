@@ -1,6 +1,5 @@
 package org.example.tobi.spring_tobi.d03.ex_3_5.dao;
 
-import org.example.tobi.spring_tobi.d03.ex_3_5.PreparedStatementSetter;
 import org.example.tobi.spring_tobi.d03.ex_3_5.domain.User;
 
 import javax.sql.DataSource;

@@ -1,4 +1,4 @@
-package org.example.tobi.spring_tobi.d03.ex_3_5;
+package org.example.tobi.spring_tobi.d03.ex_3_5.dao;
 
 
 import java.sql.PreparedStatement;
