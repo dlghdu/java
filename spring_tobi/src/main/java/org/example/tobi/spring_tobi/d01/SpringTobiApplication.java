@@ -39,3 +39,40 @@ public class SpringTobiApplication {
     }
 
 }
+
+
+//show databases;
+//
+//CREATE DATABASE spring_tobi
+//CHARACTER SET utf8mb4
+//COLLATE utf8mb4_unicode_ci;
+//
+//use spring_tobi;
+//
+//CREATE TABLE users (
+//        id varchar(10) primary key,
+//name varchar(20) not null,
+//password varchar(10) not null
+//        );
+//
+//show tables;
+//
+//SELECT * FROM users;
+//
+//DESC users;
+//
+//CREATE DATABASE spring_tobi_2
+//CHARACTER SET utf8mb4
+//COLLATE utf8mb4_unicode_ci;
+//
+//use spring_tobi_2;
+//
+//CREATE TABLE users (
+//        id varchar(10) primary key,
+//name varchar(20) not null,
+//password varchar(10) not null
+//        );
+//
+//SELECT * FROM users;
+//
+//show tables;
