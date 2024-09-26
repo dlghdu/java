@@ -3,7 +3,16 @@ package org.example.tobi.spring_tobi.ch5.ex_5_2.service;
 import org.example.tobi.spring_tobi.ch5.ex_5_2.dao.UserDao;
 import org.example.tobi.spring_tobi.ch5.ex_5_2.domain.Level;
 import org.example.tobi.spring_tobi.ch5.ex_5_2.domain.User;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserService {
@@ -11,12 +20,26 @@ public class UserService {
     public static final int MIN_LOGCOUNT_FOR_SILVER = 50;
     public static final int MIN_RECCOMMEND_FOR_GOLD = 30;
 
+    private DataSource dataSource;
     private UserDao userDao;
+    private PlatformTransactionManager transactionManager;
+
+    public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
 
     public UserService(String id) {}
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public void add(User user) {
@@ -37,25 +60,79 @@ public class UserService {
         }
     }
 
-//            if (
-//                    user.getLevel() == Level.BASIC
-//                    && user.getLogin() >= 50
-//            ) {
-//                user.setLevel(Level.SILVER);
-//                changed = true;
-//            }
-//            else if (
-//                user.getLevel() == Level.SILVER &&
-//                        user.getRecommend() >= 30
-//            ) {
-//                user.setLevel(Level.GOLD);
-//                changed = true;
-//            }
-//            else if ( user.getLevel() == Level.GOLD ) {
-//                changed = false;
-//            }
-//            if (changed) { userDao.update(user); }
+    public void upgradelevelsV2() throws SQLException {
 
+        TransactionSynchronizationManager.initSynchronization();
+        Connection c = DataSourceUtils.getConnection(dataSource);
+
+        c.setAutoCommit(false);
+
+        try {
+            List<User> users = userDao.getAll();
+
+            for (User user : users) {
+                if (canUpgradeLevel(user)) {
+                    // upgrade
+                    upgradeLevel(user);
+                }
+            }
+            c.commit();
+        } catch (Exception e) {
+            c.rollback();
+            throw e;
+        } finally {
+            DataSourceUtils.releaseConnection(c, dataSource);
+            TransactionSynchronizationManager.unbindResource(dataSource);
+            TransactionSynchronizationManager.clearSynchronization();
+        }
+
+
+    }
+
+    public void upgradelevelsV3() throws SQLException {
+
+        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        try {
+            List<User> users = userDao.getAll();
+
+            for (User user : users) {
+                if (canUpgradeLevel(user)) {
+                    // upgrade
+                    upgradeLevel(user);
+                }
+            }
+            transactionManager.commit(status);
+        } catch (Exception e) {
+            transactionManager.rollback(status);
+            throw e;
+        }
+
+
+    }
+
+    public void upgradelevelsV4() throws SQLException {
+
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        try {
+            List<User> users = userDao.getAll();
+
+            for (User user : users) {
+                if (canUpgradeLevel(user)) {
+                    // upgrade
+                    upgradeLevel(user);
+                }
+            }
+            transactionManager.commit(status);
+        } catch (Exception e) {
+            transactionManager.rollback(status);
+            throw e;
+        }
+
+
+    }
 
     private boolean canUpgradeLevel(User user) {
         Level currentlevel = user.getLevel();

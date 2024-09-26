@@ -9,10 +9,9 @@ public class User {
     int login;
     int recommend;
 
-    public User(String bumjin, String 박범진, String p1, Level basic, int login, int recommend) {
-    }
+    public User() {}
 
-    public User() {
+    public User(String id, String name, String password, Level level, int login, int recommend) {
         this.id = id;
         this.level = level;
         this.login = login;
