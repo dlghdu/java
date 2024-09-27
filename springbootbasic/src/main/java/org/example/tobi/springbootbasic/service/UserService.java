@@ -40,4 +40,8 @@ public class UserService {
         userMapper.insertUser(user);
     }
 
+    public void updateUser(Long id, User user) {
+        user.setId(id);
+        userMapper.updateUser(user);
+    }
 }

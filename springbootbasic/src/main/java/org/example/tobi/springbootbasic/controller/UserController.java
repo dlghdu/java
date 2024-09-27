@@ -3,6 +3,7 @@ package org.example.tobi.springbootbasic.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.tobi.springbootbasic.dto.MemberCreatequestDTO;
 import org.example.tobi.springbootbasic.dto.MemberResponseDTO;
+import org.example.tobi.springbootbasic.dto.MemberchangeDTO;
 import org.example.tobi.springbootbasic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,6 +51,13 @@ public class UserController {
     @PostMapping("/register")
     public String createUser(@RequestBody MemberCreatequestDTO request) {
         userService.createUser( request.toUser() );
+        return "redirect:/users";
+    }
+
+    @PutMapping("/update/{id}")
+    public String updateUser(@PathVariable Long id, @RequestBody MemberchangeDTO request) {
+        MemberResponseDTO user = userService.findById(id);
+        userService.updateUser(user.getId(), request.toUser() );
         return "redirect:/users";
     }
 
