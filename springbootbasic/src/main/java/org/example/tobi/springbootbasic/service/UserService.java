@@ -1,7 +1,7 @@
 package org.example.tobi.springbootbasic.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tobi.springbootbasic.dto.MemberListResponseDTO;
+import org.example.tobi.springbootbasic.dto.MemberResponseDTO;
 import org.example.tobi.springbootbasic.mapper.UserMapper;
 import org.example.tobi.springbootbasic.model.User;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,13 @@ public class UserService {
 
     private final UserMapper userMapper;
 
-    public List<MemberListResponseDTO> findAll() {
+    public List<MemberResponseDTO> findAll() {
         List<User> users = userMapper.findAll();
 
         // 방법.1
-        List<MemberListResponseDTO> members = new ArrayList<>();
+        List<MemberResponseDTO> members = new ArrayList<>();
         for (User user : users) {
-            members.add(user.toMemberListResponseDTO());
+            members.add(user.toMemberResponseDTO());
         }
         return members;
 
@@ -29,6 +29,11 @@ public class UserService {
 //        return users.stream()
 //                .map(User::toMemberListResponseDTO)
 //                .collect(Collectors.toList());
+    }
+
+    public MemberResponseDTO findById(Long id) {
+        return userMapper.findById(id)
+                .toMemberResponseDTO();
     }
 
     public void createUser(User user) {

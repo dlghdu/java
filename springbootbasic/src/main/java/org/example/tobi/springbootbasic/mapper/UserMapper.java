@@ -9,5 +9,6 @@ import java.util.List;
 public interface UserMapper {
 
     List<User> findAll();
+    User findById(long id);
     void insertUser(User user);
 }

@@ -2,15 +2,11 @@ package org.example.tobi.springbootbasic.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.tobi.springbootbasic.dto.MemberCreatequestDTO;
-import org.example.tobi.springbootbasic.dto.MemberListResponseDTO;
-import org.example.tobi.springbootbasic.model.User;
+import org.example.tobi.springbootbasic.dto.MemberResponseDTO;
 import org.example.tobi.springbootbasic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +19,7 @@ public class UserController {
 
     @GetMapping
     public String findAllUsers(Model model) {
-        List<MemberListResponseDTO> users = userService.findAll();
+        List<MemberResponseDTO> users = userService.findAll();
         System.out.println(users.size());
         model.addAttribute("users", users);
         return "userlist";
@@ -33,6 +29,23 @@ public class UserController {
     public String registerForm() {
         return "signup";
     }
+
+    // 방법 1
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        // 로직 추가.... -> id 조건으로 데이터 조회한 데이터를
+        //프론트(수정)화면에 뿌릴 것.
+        MemberResponseDTO user = userService.findById(id);
+        model.addAttribute("user", user);
+        return "userupdate";
+    }
+
+      // 방법 2
+//    @GetMapping("/update")
+//    public String updateForm(@RequestParam("id") Long id, Model model) {
+//        System.out.println("id :: " + id);
+//        return "userupdate";
+//    }
 
     @PostMapping("/register")
     public String createUser(@RequestBody MemberCreatequestDTO request) {
