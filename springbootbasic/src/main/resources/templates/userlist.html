@@ -25,10 +25,10 @@
             <td th:text="${user.name}"></td>
             <td th:text="${user.email}"></td>
             <td>
-<!--                <a th:href="@{/users/register/{id}(id=${user.id})}" class="btn btn-primary btn-sm">등록</a>-->
+                <!--                <a th:href="@{/users/register/{id}(id=${user.id})}" class="btn btn-primary btn-sm">등록</a>-->
                 <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary btn-sm">수정</a>
                 <a th:href="@{/users/delete(id=${user.id},userid=${user.userid})} "style="background-color: red; color: white" class="btn btn-primary btn-sm">삭제</a>
-<!--            <td><a th:href="@{/users/update(id=${user.id})}" class="btn btn-primary btn-sm">수정</a></td>-->
+                <!--            <td><a th:href="@{/users/update(id=${user.id})}" class="btn btn-primary btn-sm">수정</a></td>-->
             </td>
         </tr>
         </tbody>

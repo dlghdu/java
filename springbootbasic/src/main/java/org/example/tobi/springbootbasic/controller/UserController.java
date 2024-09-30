@@ -44,7 +44,7 @@ public class UserController {
         return "userupdate";
     }
 
-      // 방법 2
+    // 방법 2
 //    @GetMapping("/update")
 //    public String updateForm(@RequestParam("id") Long id, Model model) {
 //        System.out.println("id :: " + id);
@@ -60,9 +60,9 @@ public class UserController {
         model.addAttribute(
                 "user",
                 MemberDeleteUserResponseDTO.builder()
-                    .id(id)
-                    .userid(userid)
-                    .build()
+                        .id(id)
+                        .userid(userid)
+                        .build()
 
         );
         return "userdelete";
@@ -74,20 +74,6 @@ public class UserController {
         return "redirect:/users";
     }
 
-<<<<<<< HEAD
-    @PutMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") Long id, @RequestBody MemberchangeDTO request) {
-        MemberResponseDTO user = userService.findById(id);
-        userService.updateUser(user.getId(), request.toUser() );
-        return "redirect:/users";
-=======
-//    @PutMapping("/update/{id}")
-//    public String updateUser(@PathVariable Long id, @RequestBody MemberchangeDTO request) {
-//        MemberResponseDTO user = userService.findById(id);
-//        userService.updateUser(user.getId(), request.toUser() );
-//        return "redirect:/users";
-//    }
-
     @PutMapping
     public ResponseEntity<String> update(@RequestBody MemberUpdatequestDTO request) {
         userService.updateUser( request.toUser() );
@@ -98,7 +84,6 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteUser(@RequestBody MemberDeleteUserResponseDTO request) {
         userService.deleteUser( request.toUser() );
         return ResponseEntity.ok(HttpStatus.OK);
->>>>>>> e4bcb4abe283200c8edc9189beaeb8e39fb701c3
     }
 
 }

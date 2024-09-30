@@ -14,11 +14,11 @@ public class MemberUpdatequestDTO {
 
     public User toUser() {
         return User.builder()
-            .id(id)
-            .name(name)
-            .email(email)
-            .userid(userid)
-            .build();
+                .id(id)
+                .name(name)
+                .email(email)
+                .userid(userid)
+                .build();
     }
 }
 
