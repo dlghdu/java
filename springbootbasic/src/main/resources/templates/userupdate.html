@@ -39,7 +39,7 @@
             userid: document.getElementById('userid').value
         };
 
-        fetch('/users', {
+        fetch('/users/update/${id}', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,6 +5,7 @@ import org.example.tobi.springbootbasic.dto.MemberResponseDTO;
 import org.example.tobi.springbootbasic.mapper.UserMapper;
 import org.example.tobi.springbootbasic.model.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class UserService {
         userMapper.insertUser(user);
     }
 
+    @Transactional
     public void updateUser(Long id, User user) {
         user.setId(id);
         userMapper.updateUser(user);

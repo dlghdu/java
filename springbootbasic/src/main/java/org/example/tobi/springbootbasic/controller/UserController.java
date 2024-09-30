@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public String updateUser(@PathVariable Long id, @RequestBody MemberchangeDTO request) {
+    public String updateUser(@PathVariable("id") Long id, @RequestBody MemberchangeDTO request) {
         MemberResponseDTO user = userService.findById(id);
         userService.updateUser(user.getId(), request.toUser() );
         return "redirect:/users";
