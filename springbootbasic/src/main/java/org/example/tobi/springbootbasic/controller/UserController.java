@@ -2,9 +2,12 @@ package org.example.tobi.springbootbasic.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.tobi.springbootbasic.dto.MemberCreatequestDTO;
+import org.example.tobi.springbootbasic.dto.MemberDeleteUserResponceDTO;
 import org.example.tobi.springbootbasic.dto.MemberResponseDTO;
-import org.example.tobi.springbootbasic.dto.MemberchangeDTO;
+import org.example.tobi.springbootbasic.dto.MemberUpdatequestDTO;
 import org.example.tobi.springbootbasic.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,17 +51,46 @@ public class UserController {
 //        return "userupdate";
 //    }
 
+    @GetMapping("/delete")
+    public String deleteUser(
+            @RequestParam("id") Long id,
+            @RequestParam("userid") String userid,
+            Model model
+    ) {
+        model.addAttribute(
+                "user",
+                MemberDeleteUserResponceDTO.builder()
+                    .id(id)
+                    .userid(userid)
+                    .build()
+
+        );
+        return "userdelete";
+    }
+
     @PostMapping("/register")
     public String createUser(@RequestBody MemberCreatequestDTO request) {
         userService.createUser( request.toUser() );
         return "redirect:/users";
     }
 
-    @PutMapping("/update/{id}")
-    public String updateUser(@PathVariable Long id, @RequestBody MemberchangeDTO request) {
-        MemberResponseDTO user = userService.findById(id);
-        userService.updateUser(user.getId(), request.toUser() );
-        return "redirect:/users";
+//    @PutMapping("/update/{id}")
+//    public String updateUser(@PathVariable Long id, @RequestBody MemberchangeDTO request) {
+//        MemberResponseDTO user = userService.findById(id);
+//        userService.updateUser(user.getId(), request.toUser() );
+//        return "redirect:/users";
+//    }
+
+    @PutMapping
+    public ResponseEntity<String> update(@RequestBody MemberUpdatequestDTO request) {
+        userService.updateUser( request.toUser() );
+        return ResponseEntity.ok("Updated");
+    }
+
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody MemberDeleteUserResponceDTO request) {
+        userService.deleteUser( request.toUser() );
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 }
