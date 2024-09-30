@@ -20,10 +20,10 @@
         </thead>
         <tbody>
         <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.userid}"></td>
+            <td th:text="${user.number}"></td>
+            <td th:text="${user.title}"></td>
             <td th:text="${user.name}"></td>
-            <td th:text="${user.email}"></td>
+            <td th:text="${user.day}"></td>
             <td>
                 <!--                <a th:href="@{/users/register/{id}(id=${user.id})}" class="btn btn-primary btn-sm">등록</a>-->
                 <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary btn-sm">수정</a>

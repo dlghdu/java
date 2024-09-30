@@ -5,4 +5,10 @@
 
 <mapper namespace="org.example.tobi.springbootbasic.mapper.UserMapper">
 
+    <select id="somefind" resultType="org.example.tobi.sbcnotice.model.User">
+        SELECT id, today, name, title
+        FROM noticee
+        WHERE id = #{id};
+    </select>
+
 </mapper>

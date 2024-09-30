@@ -6,7 +6,7 @@ import org.example.tobi.springbootbasic.model.User;
 
 @Getter
 @Builder
-public class MemberDeleteUserResponceDTO {
+public class MemberDeleteUserResponseDTO {
     public Long id;
     private String userid;
     private String password;

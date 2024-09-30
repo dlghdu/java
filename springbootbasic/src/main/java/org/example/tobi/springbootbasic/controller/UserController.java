@@ -2,7 +2,7 @@ package org.example.tobi.springbootbasic.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.tobi.springbootbasic.dto.MemberCreatequestDTO;
-import org.example.tobi.springbootbasic.dto.MemberDeleteUserResponceDTO;
+import org.example.tobi.springbootbasic.dto.MemberDeleteUserResponseDTO;
 import org.example.tobi.springbootbasic.dto.MemberResponseDTO;
 import org.example.tobi.springbootbasic.dto.MemberUpdatequestDTO;
 import org.example.tobi.springbootbasic.service.UserService;
@@ -59,7 +59,7 @@ public class UserController {
     ) {
         model.addAttribute(
                 "user",
-                MemberDeleteUserResponceDTO.builder()
+                MemberDeleteUserResponseDTO.builder()
                     .id(id)
                     .userid(userid)
                     .build()
@@ -88,7 +88,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteUser(@RequestBody MemberDeleteUserResponceDTO request) {
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody MemberDeleteUserResponseDTO request) {
         userService.deleteUser( request.toUser() );
         return ResponseEntity.ok(HttpStatus.OK);
     }
