@@ -26,7 +26,7 @@ public class UserService {
         }
         return members;
 
-          // 방법2 : Java Stream & Lambda
+        // 방법2 : Java Stream & Lambda
 //        return users.stream()
 //                .map(User::toMemberListResponseDTO)
 //                .collect(Collectors.toList());
@@ -40,12 +40,6 @@ public class UserService {
     public void createUser(User user) {
         userMapper.insertUser(user);
     }
-
-//    @Transactional
-//    public void updateUser(Long id, User user) {
-//        user.setId(id);
-//        userMapper.updateUser(user);
-//    }
 
     public void updateUser(User user) {
         userMapper.updateUser(user);

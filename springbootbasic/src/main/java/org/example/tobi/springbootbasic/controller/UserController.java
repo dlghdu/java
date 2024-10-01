@@ -44,7 +44,7 @@ public class UserController {
         return "userupdate";
     }
 
-      // 방법 2
+    // 방법 2
 //    @GetMapping("/update")
 //    public String updateForm(@RequestParam("id") Long id, Model model) {
 //        System.out.println("id :: " + id);
@@ -60,9 +60,9 @@ public class UserController {
         model.addAttribute(
                 "user",
                 MemberDeleteUserResponseDTO.builder()
-                    .id(id)
-                    .userid(userid)
-                    .build()
+                        .id(id)
+                        .userid(userid)
+                        .build()
 
         );
         return "userdelete";
@@ -73,13 +73,6 @@ public class UserController {
         userService.createUser( request.toUser() );
         return "redirect:/users";
     }
-
-//    @PutMapping("/update/{id}")
-//    public String updateUser(@PathVariable Long id, @RequestBody MemberchangeDTO request) {
-//        MemberResponseDTO user = userService.findById(id);
-//        userService.updateUser(user.getId(), request.toUser() );
-//        return "redirect:/users";
-//    }
 
     @PutMapping
     public ResponseEntity<String> update(@RequestBody MemberUpdatequestDTO request) {

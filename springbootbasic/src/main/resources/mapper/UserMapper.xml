@@ -17,9 +17,9 @@
         INSERT INTO user(name, email, userid, password) VALUES (#{name}, #{email}, #{userid}, #{password})
     </insert>
 
-<!--    <update id="updateUser" parameterType="org.example.tobi.springbootbasic.model.User">-->
-<!--        UPDATE INTO user(name, email,userid) VALUES (#{name}, #{email}, #{userid})-->
-<!--    </update>-->
+    <!--    <update id="updateUser" parameterType="org.example.tobi.springbootbasic.model.User">-->
+    <!--        UPDATE INTO user(name, email,userid) VALUES (#{name}, #{email}, #{userid})-->
+    <!--    </update>-->
 
     <update id="updateUser" parameterType="org.example.tobi.springbootbasic.model.User">
         UPDATE
@@ -34,12 +34,12 @@
 
     <delete id="deleteUser" parameterType="org.example.tobi.springbootbasic.model.User">
         DELETE FROM
-                   user
+            user
         WHERE
             id = #{id}
-        AND
+          AND
             userid = #{userid}
-        AND
+          AND
             password = #{password};
     </delete>
 
