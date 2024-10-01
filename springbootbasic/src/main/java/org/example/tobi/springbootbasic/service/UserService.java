@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class UserService {
 
         // 방법2 : Java Stream & Lambda
 //        return users.stream()
-//                .map(User::toMemberListResponseDTO)
+//                .map(User::toMemberResponseDTO)
 //                .collect(Collectors.toList());
     }
 

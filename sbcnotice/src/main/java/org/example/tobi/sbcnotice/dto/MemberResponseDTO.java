@@ -10,10 +10,8 @@ import lombok.Getter;
 public class MemberResponseDTO {
     private Long number;
     private String title;
-    private String day;
     private String name;
-    private String email;
-    private String phone;
-    private String userid;
+    private String day;
+
 
 }

@@ -8,7 +8,7 @@ import org.example.tobi.sbcnotice.dto.MemberResponseDTO;
 @Getter
 @Setter
 @Builder
-public class User {
+public class noticee {
     private Long number;
     private String title;
     private String day;

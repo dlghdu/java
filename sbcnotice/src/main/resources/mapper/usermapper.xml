@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.tobi.sbcnotice.mapper.UserMapper">
+
+    <select id="somefind" resultType="org.example.tobi.sbcnotice.model.noticee">
+        SELECT number, title, day, name, email, phone, userid, password
+        FROM noticee
+    </select>
+    
+    <insert id="insertUser" parameterType="org.example.tobi.sbcnotice.model.noticee">
+        insert into noticee(email, name, phone, userid, password) VALUES (#{email}, #{name}, #{phone}, #{userid}, #{password})
+    </insert>
+
+</mapper>
