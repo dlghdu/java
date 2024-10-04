@@ -35,3 +35,5 @@ session이 뭐죠
 -> 해당 글을 수정할 수 있는 페이지로 이동시킨다.(로그인 되어있어야 할것)
 
 5. 가?능
+
+Invalid bound statement (not found): org.example.tobi.sbcnode.mapper.MemberMapper.Signup
