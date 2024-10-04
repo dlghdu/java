@@ -5,15 +5,13 @@
 
 <mapper namespace="org.example.tobi.sbcnode.mapper.MemberMapper">
 
-<!--    <resultMap id="memberResultMap" type="com.example.tobi.springbootbasicboard.model.Member">-->
-<!--        <result property="userId" column="user_id"/>-->
-<!--        <result property="password" column="password"/>-->
-<!--        <result property="userName" column="user_name"/>-->
-<!--    </resultMap>-->
+<!--    <insert id="signUp" parameterType="org.example.tobi.sbcnode.model.Member">-->
+<!--        INSERT INTO member (user_id, password, user_name)-->
+<!--        VALUES (#{userId}, #{password}, #{userName});-->
+<!--    </insert>-->
 
-    <insert id="signUp" parameterType="com.example.tobi.springbootbasicboard.model.Member">
-        INSERT INTO member (user_id, password, user_name)
-        VALUES (#{userId}, #{password}, #{userName});
+    <insert id="Signup" parameterType="org.example.tobi.sbcnode.model.Member">
+        INSERT INTO member (user_id, password, user_name) VALUES (#{user_id}, #{password}, #{user_name})
     </insert>
 
 </mapper>

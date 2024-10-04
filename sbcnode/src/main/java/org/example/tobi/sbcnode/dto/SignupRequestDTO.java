@@ -13,10 +13,15 @@ public class SignupRequestDTO {
     private String userName;
 
     public Member toMember() {
+//        return Member.builder()
+//                .userId(userId)
+//                .password(password)
+//                .userName(userName)
+//                .build();
         return Member.builder()
-                .userId(userId)
+                .user_id(userId)
                 .password(password)
-                .userName(userName)
+                .user_name(userName)
                 .build();
     }
 }
