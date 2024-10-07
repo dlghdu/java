@@ -10,6 +10,7 @@
         <result property="userId" column="user_id"/>
         <result property="title" column="title"/>
         <result property="created" column="created"/>
+        <result property="filePath" column="file_path"/>
     </resultMap>
 
     <select id="selectBoardList"
@@ -21,5 +22,20 @@
     <select id="countBoards" resultType="Integer">
         SELECT COUNT(*) FROM article;
     </select>
+
+    <select id="selectBoardDetail"
+            parameterType="Long"
+            resultMap="boardResultMap">
+        SELECT
+            id, title, content, user_id, file_path, created
+        FROM article WHERE id = #{id};
+    </select>
+    
+    <insert id="saveArticle" parameterType="org.example.tobi.sbcnode.model.Board">
+        INSERT INTO
+            article(user_id, title, content,file_path)
+        VALUES
+            (#{userId}, #{title}, #{content}, #{filePath});
+    </insert>
 
 </mapper>

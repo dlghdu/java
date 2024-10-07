@@ -1,4 +1,4 @@
-package org.example.tobi.sbcnode.model;
+package org.example.tobi.sbcnode.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,11 +7,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class Board {
-    private Long id;
+public class BoardDetailResponseDTO {
     private String title;
     private String content;
     private String userId;
     private String filePath;
     private LocalDateTime created;
+
+
 }
