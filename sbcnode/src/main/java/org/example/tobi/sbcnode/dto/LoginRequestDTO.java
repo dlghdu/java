@@ -6,17 +6,15 @@ import org.example.tobi.sbcnode.model.Member;
 
 @Getter
 @ToString
-public class SignupRequestDTO {
+public class LoginRequestDTO {
 
     private String userId;
     private String password;
-    private String userName;
 
     public Member toMember() {
         return Member.builder()
                 .userId(userId)
                 .password(password)
-                .userName(userName)
                 .build();
     }
 }
