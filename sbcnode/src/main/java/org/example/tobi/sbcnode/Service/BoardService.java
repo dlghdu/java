@@ -3,6 +3,7 @@ package org.example.tobi.sbcnode.Service;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.example.tobi.sbcnode.dto.BoardDeleteRequestDTO;
 import org.example.tobi.sbcnode.dto.LoginResponseDTO;
 import org.example.tobi.sbcnode.mapper.BoardMapper;
 import org.example.tobi.sbcnode.mapper.MemberMapper;
@@ -59,6 +60,11 @@ public class BoardService {
 
     public Resource downloadFile(String fileName) {
         return fileService.downloadFile(fileName);
+    }
+
+    public void deleteArticle(long id, BoardDeleteRequestDTO request) {
+        boardMapper.deleteBoardById(id);
+        fileService.deleteFile(request.getFilePath());
     }
 
 }

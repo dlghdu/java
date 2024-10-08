@@ -38,4 +38,9 @@
             (#{userId}, #{title}, #{content}, #{filePath});
     </insert>
 
+    <delete id="deleteBoardById" parameterType="Long">
+        DELETE FROM article
+        WHERE id = #{id};
+    </delete>
+
 </mapper>
