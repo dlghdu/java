@@ -53,7 +53,7 @@ public class BoardAPIController {
     public ResponseEntity<Void> saveArticle(
             @RequestParam("title") String title,
             @RequestParam("hiddenUserId") String userId,
-            @RequestParam("content") String content
+            @RequestParam("content") String content,
             @RequestPart("file") MultipartFile file
     ) {
         boardService.saveArticle(userId, title, content, file);
