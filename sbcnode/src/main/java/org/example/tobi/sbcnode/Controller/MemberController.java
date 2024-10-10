@@ -10,6 +10,7 @@ public class MemberController {
 
     @GetMapping("/join")
     public String signUp() {
+
         return "signup";
     }
 

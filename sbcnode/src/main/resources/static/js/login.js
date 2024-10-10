@@ -1,4 +1,3 @@
-
 $(document).ready(() => {
 
     $('#signin').click(() => {
@@ -10,7 +9,6 @@ $(document).ready(() => {
             username : userId,
             password : password
         }
-
 
         $.ajax({
             type: 'POST',
@@ -35,9 +33,5 @@ $(document).ready(() => {
                 alert('로그인 중 오류가 발생했습니다.');
             }
         });
-
     });
-
-
-
 });

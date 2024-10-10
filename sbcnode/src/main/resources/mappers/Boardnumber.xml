@@ -43,7 +43,7 @@
         WHERE id = #{id};
     </delete>
 
-    <update id="updateArticle" parameterType="com.example.tobi.springbootbasicboard.model.Board">
+    <update id="updateArticle" parameterType="com.example.tobi.sbcnode.model.Board">
         UPDATE article
         SET
             title = #{title}, content = #{content}, file_path = #{filePath}
