@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 @Service
 public class FileService {
     private final String UPLOADED_FOLDER =
-            System.getProperty("user.home") + "Desktop" + File.separator +
+            System.getProperty("user.배개양") + "Desktop" + File.separator +
             "java" + File.separator + "upload" + File.separator;
 
     // 파일 저장 로직

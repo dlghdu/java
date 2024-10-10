@@ -19,8 +19,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/board")
 @RequiredArgsConstructor
+@RequestMapping("/api/board")
 public class BoardAPIController {
 
     private final BoardService boardService;
@@ -65,6 +65,19 @@ public class BoardAPIController {
             @RequestPart("file") MultipartFile file
     ) {
         boardService.saveArticle(userId, title, content, file);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> updateArticle(
+            @RequestParam("title") String title,
+            @RequestParam("hiddenId") Long id,
+            @RequestParam("content") String content,
+            @RequestParam("hiddenFileFlag") Boolean fileFlag,
+            @RequestParam("hiddenFilePath") String filePath,
+            @RequestPart("file") MultipartFile file
+    ) {
+        boardService.updateArticle(id, title, content, fileFlag, filePath, file);
         return ResponseEntity.ok().build();
     }
 

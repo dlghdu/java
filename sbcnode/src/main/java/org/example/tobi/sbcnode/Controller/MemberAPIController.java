@@ -8,6 +8,7 @@ import org.example.tobi.sbcnode.dto.LoginResponseDTO;
 import org.example.tobi.sbcnode.dto.SignupRequestDTO;
 import org.example.tobi.sbcnode.dto.SignupResponseDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,10 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class MemberAPIController {
 
     private final MemberService memberService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder ;
 
     @PostMapping("/join")
     public ResponseEntity<SignupResponseDTO> signUp(@RequestBody SignupRequestDTO signupRequestDTO) {
-        memberService.signUp(signupRequestDTO.toMember());
+        memberService.signUp(signupRequestDTO.toMember(bCryptPasswordEncoder));
         return ResponseEntity.ok(
                 SignupResponseDTO.builder()
                         .url("/member/login")
@@ -27,11 +29,11 @@ public class MemberAPIController {
         );
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> Login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session) {
-        return ResponseEntity.ok(
-                memberService.login(loginRequestDTO.toMember(), session)
-        );
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<LoginResponseDTO> Login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session) {
+//        return ResponseEntity.ok(
+//                memberService.login(loginRequestDTO.toMember(), session)
+//        );
+//    }
 
 }
