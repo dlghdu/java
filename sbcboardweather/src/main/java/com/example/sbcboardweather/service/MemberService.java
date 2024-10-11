@@ -32,7 +32,7 @@ public class MemberService {
         session.setAttribute("userId", getMember.getUserId());
         session.setAttribute("userName", getMember.getUserName());
 
-        return makeloginResponseDTO(true, "로그인이 성공했습니다.", "weatherboard", member);
+        return makeloginResponseDTO(true, "로그인이 성공했습니다.", "/board", member);
         
     }
     

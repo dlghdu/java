@@ -1,0 +1,90 @@
+html, body {
+    height: 100%; /* 전체 높이 사용 */
+    margin: 0; /* 기본 여백 제거 */
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #f8f8f8;
+    padding: 5px 10px; /* 상하 여백 줄이기 */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav {
+    display: flex;
+    gap: 10px; /* 버튼 간격 줄이기 */
+}
+
+.button {
+    text-decoration: none;
+    color: #007bff;
+    padding: 5px 10px; /* 패딩 줄이기 */
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 14px; /* 글자 크기 줄이기 */
+}
+
+.button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+main {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 가로 가운데 정렬 */
+}
+
+h1 {
+    text-align: center; /* 텍스트 가운데 정렬 */
+    border: 2px solid #007bff; /* 테두리 두께 및 색상 */
+    padding: 10px; /* 테두리와 텍스트 간격 */
+    border-radius: 5px; /* 테두리 모서리 둥글게 */
+    margin: 20px 500px; /* 위아래좌우 여백 추가 */
+}
+
+.box-container {
+    display: flex; /* 가로 방향으로 정렬 */
+    justify-content: space-between; /* 양쪽 끝으로 배치 */
+    width: 100%; /* 전체 너비 사용 */
+    max-width: 800px; /* 최대 너비 설정 */
+    margin-top: 20px; /* h1과의 여백 */
+}
+
+/*.box {*/
+/*    flex: 1; !* 남은 공간을 동일하게 나누어 차지 *!*/
+/*    height: 100px; !* 네모 칸 높이 *!*/
+/*    border: 1px solid #007bff; !* 테두리 색상 *!*/
+/*    background-color: #f0f8ff; !* 배경색 *!*/
+/*    margin: 0 10px; !* 좌우 여백 *!*/
+/*    display: flex; !* 가운데 정렬을 위한 Flexbox *!*/
+/*    justify-content: center; !* 가로 가운데 정렬 *!*/
+/*    align-items: center; !* 세로 가운데 정렬 *!*/
+/*}*/
+
+.box1 {
+    /*flex: 1; !* 남은 공간을 동일하게 나누어 차지 *!*/
+    height: 100px; /* 네모 칸 높이 */
+    border: 1px solid #007bff; /* 테두리 색상 */
+    background-color: #f0f8ff; /* 배경색 */
+    margin: 0 10px; /* 좌우 여백 */
+    display: flex; /* 가운데 정렬을 위한 Flexbox */
+    justify-content: left; /* 가로 가운데 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+}
+
+.box2 {
+    /*flex: 1; !* 남은 공간을 동일하게 나누어 차지 *!*/
+    height: 100px; /* 네모 칸 높이 */
+    border: 1px solid #007bff; /* 테두리 색상 */
+    background-color: #f0f8ff; /* 배경색 */
+    margin: 0 10px; /* 좌우 여백 */
+    display: flex; /* 가운데 정렬을 위한 Flexbox */
+    justify-content: right; /* 가로 가운데 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+}
