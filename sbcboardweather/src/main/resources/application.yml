@@ -17,4 +17,4 @@ server:
 weather:
     api:
         url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"
-        key: "Cd52LIDaGaaxmLiMPERra34t++ElXshdqyfvW8jUnmwHRvlch27LgKJC1t8x/WVxACJxvHSICDQ/0FifIUkpaw=="
+        key: "GQOL4FopR36Ra82FGjhZqMzR4kYKJT%2FuSgo7wGX8iclyQs3kx406tY%2Bt5oLtPq9QkWRyBV4W6oXMk2eQ%2FWp1BA%3D%3D"

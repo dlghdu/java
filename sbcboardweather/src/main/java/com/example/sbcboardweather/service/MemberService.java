@@ -22,21 +22,21 @@ public class MemberService {
     public SigninReponseDTO signin(Member member, HttpSession session) {
         Member getMember = memberMapper.signIn(member.getUserId());
         if (getMember == null) {
-            return makeloginResponseDTO(false, "존재하지 않는 회원입니다.", null, null);
+            return SigninReponseDTO(false, "존재하지 않는 회원입니다.", null, null);
         }
 
         if (!member.getPassword().equals(getMember.getPassword())) {
-            return makeloginResponseDTO(false, "비밀번호가 틀렸습니다.", null, null);
+            return SigninReponseDTO(false, "비밀번호가 틀렸습니다.", null, null);
         }
 
         session.setAttribute("userId", getMember.getUserId());
         session.setAttribute("userName", getMember.getUserName());
 
-        return makeloginResponseDTO(true, "로그인이 성공했습니다.", "/board", member);
+        return SigninReponseDTO(true, "로그인이 성공했습니다.", "/board", getMember);
         
     }
     
-    private SigninReponseDTO makeloginResponseDTO(boolean isloggedIn, String message, String url, Member member) {
+    private SigninReponseDTO SigninReponseDTO(boolean isloggedIn, String message, String url, Member member) {
         return SigninReponseDTO.builder()
                 .isLoggedIn(isloggedIn)
                 .message(message)

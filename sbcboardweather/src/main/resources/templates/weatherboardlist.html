@@ -10,13 +10,11 @@
 </head>
 <body>
 <header>
-    <div class="nav">
         <a href="/login" class="button">로그인</a>
         <a href="/register" class="button">회원가입</a>
-    </div>
 </header>
 <div class="container">
-    <h1 th:text="|${userName}님 환영합니다.|"></h1>
+    <h1 th:text="|${user_name}님 환영합니다.|"></h1>
     <input id="hiddenUserId" type="hidden" th:value="${userId}">
     <input type="hidden" th:value="${userName}">
     <!-- 게시판 영역 -->
