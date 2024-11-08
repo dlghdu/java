@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.example.tobi.sbcnode.mapper.BoardMapper">
+<mapper namespace="org.example.tobi.springbootspringbootbasicboardtwo.mapper.BoardMapper">
 
-    <resultMap id="boardResultMap" type="org.example.tobi.sbcnode.model.Board">
+    <resultMap id="boardResultMap" type="org.example.tobi.springbootspringbootbasicboardtwo.model.Board">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="title" column="title"/>
@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="selectBoardList"
-            parameterType="org.example.tobi.sbcnode.model.Paging"
+            parameterType="org.example.tobi.springbootspringbootbasicboardtwo.model.Paging"
             resultMap="boardResultMap">
         SELECT * FROM article ORDER BY id DESC LIMIT #{offset}, #{size};
     </select>
@@ -31,7 +31,7 @@
         FROM article WHERE id = #{id};
     </select>
     
-    <insert id="saveArticle" parameterType="org.example.tobi.sbcnode.model.Board">
+    <insert id="saveArticle" parameterType="org.example.tobi.springbootspringbootbasicboardtwo.model.Board">
         INSERT INTO
             article(user_id, title, content,file_path)
         VALUES
@@ -43,7 +43,7 @@
         WHERE id = #{id};
     </delete>
 
-    <update id="updateArticle" parameterType="org.example.tobi.sbcnode.model.Board">
+    <update id="updateArticle" parameterType="org.example.tobi.springbootspringbootbasicboardtwo.model.Board">
         UPDATE article
         SET
             title = #{title}, content = #{content}, file_path = #{filePath}
