@@ -1,5 +1,6 @@
 package org.example.tobi.sbcnode.config;
 
+import org.example.tobi.sbcnode.config.security.CustomAuthenticationFailureHandler;
 import org.example.tobi.sbcnode.config.security.CustomAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,23 +25,25 @@ public class WebsecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http,
-            CustomAuthenticationSuccessHandler successHandler
+            CustomAuthenticationSuccessHandler successHandler,
+            CustomAuthenticationFailureHandler failureHandler
     ) throws Exception {
-
         http
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
                                         new AntPathRequestMatcher("/member/login"),
                                         new AntPathRequestMatcher("/member/join"),
-                                        new AntPathRequestMatcher("join")
+                                        new AntPathRequestMatcher("/join")
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(
-                        form -> form.loginPage("/member/login")
+                        form -> form
+                                .loginPage("/member/login")
                                 .loginProcessingUrl("/login")
                                 .successHandler(successHandler)
+                                .failureHandler(failureHandler)
                 )
                 .logout(
                         logout -> logout
@@ -50,7 +53,6 @@ public class WebsecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
-
     }
 
     @Bean

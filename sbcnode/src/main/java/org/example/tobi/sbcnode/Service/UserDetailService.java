@@ -20,7 +20,7 @@ public class UserDetailService implements UserDetailsService {
 
         Member member = memberMapper.Login(username);
         if (member == null) {
-            throw new UsernameNotFoundException(username + "not found");
+            throw new UsernameNotFoundException(username + " not found");
         }
 
         return CustomUserDetails.builder()
