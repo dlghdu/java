@@ -25,7 +25,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
         LoginResponseDTO build = LoginResponseDTO.builder()
                 .isLoggedIn(false)
-                .message("로그인 실패")
+                .message("로그인 실패\n다시 로그인해주세요.")
                 .url("/member/login")
                 .build();
 

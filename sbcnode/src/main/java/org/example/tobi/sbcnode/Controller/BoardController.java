@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BoardController {
 
     @GetMapping("/")
-    public String boardlist(HttpSession session, Model model) {
+    public String boardList(HttpSession session, Model model) {
         setSession(session, model);
         return "boardlist";
     }

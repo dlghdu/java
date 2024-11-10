@@ -6,9 +6,7 @@ import org.example.tobi.sbcnode.model.Member;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Getter
-@ToString
 public class SignupRequestDTO {
-
     private String userId;
     private String password;
     private String userName;

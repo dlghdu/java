@@ -12,30 +12,31 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberMapper mbmp;
+    private final MemberMapper memberMapper;
 
     public void signUp(Member member) {
-        mbmp.signUp(member);
+        memberMapper.signUp(member);
     }
 
-    public LoginResponseDTO login(Member member, HttpSession session) {
-        Member getMember = mbmp.Login(member.getUserId());
+    public LoginResponseDTO signIn(Member member, HttpSession session) {
+        Member getMember = memberMapper.Login(member.getUserId());
         if (getMember == null) {
-            return makeLoginResponseDTO(false, "존재하지 않는 회원입니다.", null, null);
+            return makeSignInRequestDTO(false, "존재하지 않는 회원입니다.", null, null);
         }
 
-        if (!member.getPassword().equals(getMember.getPassword())) {
-            return makeLoginResponseDTO(false, "비밀번호가 틀렸습니다.", null, null);
+        if ( !member.getPassword().equals(getMember.getPassword()) ) {
+            return makeSignInRequestDTO(false, "비밀번호가 틀렸습니다.", null, null);
         }
 
         // 세션 설정
         session.setAttribute("userId", getMember.getUserId());
         session.setAttribute("userName", getMember.getUserName());
 
-        return makeLoginResponseDTO(true, "로그인이 성공했습니다.", "/", member);
+        return makeSignInRequestDTO(true, "로그인이 성공했습니다.", "/", member);
     }
 
-    private LoginResponseDTO makeLoginResponseDTO(boolean isloggedIn, String message, String url, Member member) {
+
+    private LoginResponseDTO makeSignInRequestDTO(boolean isloggedIn, String message, String url, Member member) {
         return LoginResponseDTO.builder()
                 .isLoggedIn(isloggedIn)
                 .message(message)

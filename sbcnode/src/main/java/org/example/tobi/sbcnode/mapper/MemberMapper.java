@@ -5,7 +5,6 @@ import org.example.tobi.sbcnode.model.Member;
 
 @Mapper
 public interface MemberMapper {
-
     void signUp(Member member);
     Member Login(String userId);
 }

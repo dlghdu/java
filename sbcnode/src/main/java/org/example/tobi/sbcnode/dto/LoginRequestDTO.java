@@ -7,7 +7,6 @@ import org.example.tobi.sbcnode.model.Member;
 @Getter
 @ToString
 public class LoginRequestDTO {
-
     private String userId;
     private String password;
 

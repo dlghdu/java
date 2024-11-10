@@ -56,6 +56,7 @@ public class BoardService {
                         .filePath(path)
                         .build()
         );
+
     }
 
     public Resource downloadFile(String fileName) {
@@ -89,5 +90,4 @@ public class BoardService {
                         .build()
         );
     }
-
 }

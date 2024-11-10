@@ -14,8 +14,8 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 1000px;
+    width: 60%;
+    max-width: 800px;
 }
 
 h1 {
@@ -23,63 +23,60 @@ h1 {
     color: #333;
 }
 
-#board {
-    margin-top: 20px;
+.form-group {
+    margin-bottom: 15px;
 }
 
-table {
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input[type="text"], textarea {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
     padding: 10px;
-    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    margin-bottom: 10px;
 }
 
-th {
-    background-color: #4CAF50;
-    color: white;
+textarea {
+    resize: vertical;
 }
 
-tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+input[type="text"]:focus, textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
 }
 
-tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-#pagination {
+.form-actions {
     text-align: center;
     margin-top: 20px;
 }
 
 .btn {
-    padding: 10px 15px;
     background-color: #4CAF50;
-    border: none;
     color: white;
-    cursor: pointer;
+    padding: 10px 15px;
+    border: none;
     border-radius: 5px;
-    margin: 0 10px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 1em;
 }
 
-.btn:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-
-.btn:hover:not(:disabled) {
+.btn:hover {
     background-color: #45a049;
 }
 
-#pageInfo {
-    font-size: 1.2em;
-    margin: 0 10px;
+.cancel-btn {
+    background-color: #f44336;
+}
+
+.cancel-btn:hover {
+    background-color: #e53935;
 }

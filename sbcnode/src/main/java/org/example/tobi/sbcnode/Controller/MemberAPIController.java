@@ -12,16 +12,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberAPIController {
 
     private final MemberService memberService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder ;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/join")
-    public ResponseEntity<SignupResponseDTO> signUp(@RequestBody SignupRequestDTO signupRequestDTO) {
-        memberService.signUp(signupRequestDTO.toMember(bCryptPasswordEncoder));
+    public ResponseEntity<SignupResponseDTO> signUp(@RequestBody SignupRequestDTO signUpRequestDTO) {
+        memberService.signUp(signUpRequestDTO.toMember(bCryptPasswordEncoder));
         return ResponseEntity.ok(
                 SignupResponseDTO.builder()
                         .url("/member/login")
@@ -30,9 +29,9 @@ public class MemberAPIController {
     }
 
 //    @PostMapping("/login")
-//    public ResponseEntity<LoginResponseDTO> Login(@RequestBody LoginRequestDTO loginRequestDTO, HttpSession session) {
+//    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO, HttpSession session) {
 //        return ResponseEntity.ok(
-//                memberService.login(loginRequestDTO.toMember(), session)
+//                memberService.signIn(signInRequestDTO.toMember(), session)
 //        );
 //    }
 

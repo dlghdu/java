@@ -14,9 +14,8 @@ import java.nio.file.Paths;
 
 @Service
 public class FileService {
-    private final String UPLOADED_FOLDER =
-            System.getProperty("user.home") + "Desktop" + File.separator +
-            "java" + File.separator + "upload" + File.separator;
+
+    private final String UPLOADED_FOLDER = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "java" + File.separator + "upload" + File.separator;
 
     // 파일 저장 로직
     public String fileUpload(MultipartFile file) {
@@ -50,11 +49,12 @@ public class FileService {
 
     public void deleteFile(String filePath) {
         try {
-            Path path = Paths.get(filePath);
-            Files.deleteIfExists(path);
+            if(!filePath.trim().isEmpty()) {
+                Path path = Paths.get(filePath);
+                Files.deleteIfExists(path);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 }
