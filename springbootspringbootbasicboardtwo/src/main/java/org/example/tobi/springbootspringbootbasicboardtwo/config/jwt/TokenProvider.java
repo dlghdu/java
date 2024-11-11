@@ -1,35 +1,37 @@
 package org.example.tobi.springbootspringbootbasicboardtwo.config.jwt;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.tobi.springbootspringbootbasicboardtwo.enums.Role;
 import org.example.tobi.springbootspringbootbasicboardtwo.model.Member;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.time.Duration;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TokenProvider {
 
-    private final JwtProrerties jwtProrerties;
+    private final JwtProrerties jwtProperties;
 
-
-    public String generateToken(Member member, Duration expriredAt) {
+    public String generateToken(Member member, Duration expiredAt) {
         Date now = new Date();
         return makeToken(
                 member,
-                new Date(now.getTime() + expriredAt.toMillis())
+                new Date(now.getTime() + expiredAt.toMillis())
         );
-
     }
 
     private String makeToken(Member member, Date expire) {
@@ -38,7 +40,7 @@ public class TokenProvider {
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .setIssuer(jwtProrerties.getIssuer())
+                .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(now)
                 .setExpiration(expire)
                 .setSubject(member.getUserId())
@@ -69,9 +71,43 @@ public class TokenProvider {
         }
     }
 
+    public Member getTokenDetails(String token) {
+        Claims claims = getClaims(token);
+        return Member.builder()
+                .id(claims.get("id", Long.class))
+                .userId(claims.getSubject())
+                .userName(claims.get("userName", String.class))
+                .role(Role.valueOf( claims.get("role", String.class) ))
+                .build();
+    }
+
+    // 토큰 기반으로 인증 정보를 가져오는 메서드
+    public Authentication getAuthentication(String token) {
+        Claims claims = getClaims(token);
+
+        // Claims에서 역할을 추출하고, GrantedAuthority로 변환
+        List<SimpleGrantedAuthority> authorities = Collections.singletonList(
+                new SimpleGrantedAuthority(String.valueOf(claims.get("role")))
+        );
+
+        // UserDetails 객체 생성
+        User user = new User(claims.getSubject(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(user, token, authorities);
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSecretKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
     private SecretKey getSecretKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(jwtProrerties.getSecretKey());
+        byte[] keyBytes = Base64.getDecoder().decode(jwtProperties.getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
 
 }

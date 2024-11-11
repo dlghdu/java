@@ -7,5 +7,5 @@ import org.example.tobi.springbootspringbootbasicboardtwo.model.Member;
 public interface MemberMapper {
 
     void signUp(Member member);
-    Member Login(String userId);
+    Member findByUserId(String userId);
 }

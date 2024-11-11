@@ -22,7 +22,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();// CustomUserDetails 가져오기
         Member member = userDetails.getMember();
 
@@ -45,6 +44,5 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         response.getWriter().write(
                 objectMapper.writeValueAsString(build)
         );
-
     }
 }

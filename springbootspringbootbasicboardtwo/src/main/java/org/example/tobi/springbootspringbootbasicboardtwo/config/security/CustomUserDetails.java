@@ -17,14 +17,12 @@ public class CustomUserDetails implements UserDetails {
     private Member member;
     private List<String> roles;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public String getPassword() {

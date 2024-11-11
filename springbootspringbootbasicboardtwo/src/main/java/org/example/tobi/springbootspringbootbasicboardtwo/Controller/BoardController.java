@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BoardController {
 
     @GetMapping("/")
-    public String boardlist(HttpSession session, Model model) {
-        setSession(session, model);
+    public String boardList() {
         return "boardlist";
     }
 
@@ -50,5 +49,4 @@ public class BoardController {
         model.addAttribute("userName", userName);
         model.addAttribute("userId", userId);
     }
-
 }

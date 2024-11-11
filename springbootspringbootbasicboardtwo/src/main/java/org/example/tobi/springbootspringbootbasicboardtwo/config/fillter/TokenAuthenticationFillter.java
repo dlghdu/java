@@ -1,13 +1,16 @@
 package org.example.tobi.springbootspringbootbasicboardtwo.config.fillter;
 
+import org.example.tobi.springbootspringbootbasicboardtwo.config.jwt.TokenProvider;
+import org.example.tobi.springbootspringbootbasicboardtwo.model.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.tobi.springbootspringbootbasicboardtwo.config.jwt.TokenProvider;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -28,18 +31,21 @@ public class TokenAuthenticationFillter extends OncePerRequestFilter {
 
         String token = resolveToken(request);
 
-        if (token == null) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        int validateToken = tokenProvider.validateToken(token);
+        log.info("validateToken: {}", validateToken);
+        if (validateToken == 1) {
+            // 인증정보설정 로직...
+            Authentication authentication = tokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            Member member = tokenProvider.getTokenDetails(token);
+            request.setAttribute("member", member);
+
+        } else if (validateToken == 2) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
-        if (tokenProvider.validateToken(token) == 1) {
-            // 인증정보설정 로직...
-            chain.doFilter(request, response);
-        } else if (tokenProvider.validateToken(token) == 2) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        } else {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        }
+        chain.doFilter(request, response);
     }
 
     private String resolveToken(HttpServletRequest request) {
@@ -53,4 +59,5 @@ public class TokenAuthenticationFillter extends OncePerRequestFilter {
 
         return null;
     }
+
 }

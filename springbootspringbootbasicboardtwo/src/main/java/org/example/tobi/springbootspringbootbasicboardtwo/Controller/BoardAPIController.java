@@ -26,14 +26,14 @@ public class BoardAPIController {
     private final BoardService boardService;
 
     @GetMapping
-    public BoardListResponseDTO getBoardList (
+    public BoardListResponseDTO getBoardList(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
         // 게시글 목록 가져오기
         List<Board> boards = boardService.getBoardList(page, size);
 
-        //  전체 게시글 수 가져오기
+        // 전체 게시글 수 가져오기
         int totalBoards = boardService.getTotalBoards();
 
         // 마지막 페이지 여부 계산
@@ -45,8 +45,9 @@ public class BoardAPIController {
                 .build();
     }
 
+
     @GetMapping("/{id}")
-    public BoardDetailResponseDTO getBoardDetail (@PathVariable long id) {
+    public BoardDetailResponseDTO getBoardDetail(@PathVariable long id) {
         Board boardDetail = boardService.getBoardDetail(id);
         return BoardDetailResponseDTO.builder()
                 .title(boardDetail.getTitle())
@@ -103,5 +104,4 @@ public class BoardAPIController {
         boardService.deleteArticle(id, request);
         return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
     }
-
 }
