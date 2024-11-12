@@ -42,7 +42,9 @@ public class TokenAuthenticationFillter extends OncePerRequestFilter {
             request.setAttribute("member", member);
 
         } else if (validateToken == 2) {
+            System.out.println(requestURI + " : " + validateToken);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
 
         chain.doFilter(request, response);

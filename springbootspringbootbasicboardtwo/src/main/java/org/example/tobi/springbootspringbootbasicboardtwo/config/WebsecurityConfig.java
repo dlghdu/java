@@ -12,7 +12,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -43,11 +45,19 @@ public class WebsecurityConfig {
                                         new AntPathRequestMatcher("/member/join"),
                                         new AntPathRequestMatcher("/join"),
                                         new AntPathRequestMatcher("/login"),
-                                        new AntPathRequestMatcher("/")
+                                        new AntPathRequestMatcher("/"),
+                                        new AntPathRequestMatcher("/write"),
+                                        new AntPathRequestMatcher("/detail"),
+                                        new AntPathRequestMatcher("/update/**"),
+                                        new AntPathRequestMatcher("/api/board/file/download/**"),
+                                        new AntPathRequestMatcher("/access-denied")
                                 ).permitAll()
                                 .anyRequest().authenticated()
-                )
-                .addFilterBefore(tokenAuthenticationFillter, UsernamePasswordAuthenticationFilter.class) //JWT필터 추가
+                ).addFilterBefore(tokenAuthenticationFillter, UsernamePasswordAuthenticationFilter.class) //JWT필터 추가
+                .exceptionHandling(exceptoin -> exceptoin
+                        .accessDeniedHandler(accessDeniedHandler()) // 403
+                        .authenticationEntryPoint(authenticationEntryPoint()) // 401
+                );
         ;
 
 
@@ -63,5 +73,20 @@ public class WebsecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+            response.sendRedirect("/access-denied");
+        };
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.sendRedirect("/access-denied");
+        };
+    }
+
 
 }
