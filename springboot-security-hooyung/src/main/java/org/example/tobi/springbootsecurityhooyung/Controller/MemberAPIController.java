@@ -1,13 +1,15 @@
 package org.example.tobi.springbootsecurityhooyung.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.tobi.springbootsecurityhooyung.Service.MemberService;
-import org.example.tobi.springbootsecurityhooyung.dto.LoginRequestDTO;
-import org.example.tobi.springbootsecurityhooyung.dto.LoginResponseDTO;
-import org.example.tobi.springbootsecurityhooyung.dto.SignupRequestDTO;
-import org.example.tobi.springbootsecurityhooyung.dto.SignupResponseDTO;
+import org.example.tobi.springbootsecurityhooyung.dto.*;
+import org.example.tobi.springbootsecurityhooyung.model.Member;
+import org.example.tobi.springbootsecurityhooyung.util.CookieUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +32,38 @@ public class MemberAPIController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
-        return null;
+        public ResponseEntity<LoginResponseDTO> login(
+                @RequestBody LoginRequestDTO signInRequestDTO,
+                HttpServletResponse response
+    )   {
+        LoginResponseDTO signInResponseDTO = memberService.login(signInRequestDTO.getUserId(), signInRequestDTO.getPassword());
+
+            CookieUtil.addCookie(response, "refreshToken", signInResponseDTO.getRefreshToken(), 7 * 24 * 60 * 60);
+            signInResponseDTO.setRefreshToken(null);
+            return ResponseEntity.ok(signInResponseDTO);
+        }
+
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponseDTO> logout(HttpServletRequest request, HttpServletResponse response) {
+        CookieUtil.deleteCookie(request, response, "refreshToken");
+        return ResponseEntity.ok(
+                LogoutResponseDTO.builder()
+                        .message("로그아웃 되었습니다.")
+                        .url("/member/login")
+                        .build()
+        );
+    }
+
+    @GetMapping("/user/info")
+    public ResponseEntity<UserInfoResponseDTO> getUserInfo(HttpServletRequest request) {
+        Member member = (Member) request.getAttribute("member");
+        return ResponseEntity.ok(
+                UserInfoResponseDTO.builder()
+                        .id(member.getId())
+                        .userId(member.getUserId())
+                        .userName(member.getUserName())
+                        .role(member.getRole())
+                        .build()
+        );
     }
 }

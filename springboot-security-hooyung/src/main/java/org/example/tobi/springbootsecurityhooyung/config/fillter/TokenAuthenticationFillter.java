@@ -44,8 +44,6 @@ public class TokenAuthenticationFillter extends OncePerRequestFilter {
             System.out.println(requestURI + " : " + validateToken);
             log.info(requestURI + " : " + validateToken);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        } else if (validateToken == 3) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
 
         chain.doFilter(request, response);

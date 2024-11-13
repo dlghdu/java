@@ -41,9 +41,15 @@ public class MemberService {
         // Refresh Token
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(2));
 
-        //
-
-        return null;
+        return LoginResponseDTO.builder()
+                .isLoggedIn(true)
+                .message("로그인 성공")
+                .url("/")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .userId(member.getUserId())
+                .userName(member.getUserName())
+                .build();
     }
 
 
