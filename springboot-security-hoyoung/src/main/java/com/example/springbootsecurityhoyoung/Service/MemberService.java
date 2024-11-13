@@ -1,38 +1,45 @@
 package com.example.springbootsecurityhoyoung.Service;
 
 
+import com.example.springbootsecurityhoyoung.config.jwt.TokenProvider;
+import com.example.springbootsecurityhoyoung.config.security.CustomUserDetails;
 import com.example.springbootsecurityhoyoung.dto.LoginResponseDTO;
 import com.example.springbootsecurityhoyoung.mapper.MemberMapper;
 import com.example.springbootsecurityhoyoung.model.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberMapper memberMapper;
+    private final AuthenticationManager authenticationManager;
+    private final TokenProvider tokenProvider;
 
     public void signUp(Member member) {
         memberMapper.signUp(member);
     }
 
-    public LoginResponseDTO signIn(Member member, HttpSession session) {
-        Member getMember = memberMapper.Login(member.getUserId());
-        if (getMember == null) {
-            return makeSignInRequestDTO(false, "존재하지 않는 회원입니다.", null, null);
-        }
-
-        if ( !member.getPassword().equals(getMember.getPassword()) ) {
-            return makeSignInRequestDTO(false, "비밀번호가 틀렸습니다.", null, null);
-        }
-
-        // 세션 설정
-        session.setAttribute("userId", getMember.getUserId());
-        session.setAttribute("userName", getMember.getUserName());
-
-        return makeSignInRequestDTO(true, "로그인이 성공했습니다.", "/", member);
+    public LoginResponseDTO login(String username, String password) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, password)
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
+        // Access Token
+        String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
+        // Refresh Token
+        String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(2));
+        //
+        return null;
     }
 
 
