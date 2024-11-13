@@ -4,19 +4,24 @@ import lombok.Builder;
 import lombok.Getter;
 import org.example.tobi.springbootsecurityhooyung.model.Member;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
 public class CustomUserDetails implements UserDetails {
     private Member member;
+    private List<String> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override

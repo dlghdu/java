@@ -2,6 +2,8 @@ package org.example.tobi.springbootsecurityhooyung.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.tobi.springbootsecurityhooyung.Service.MemberService;
+import org.example.tobi.springbootsecurityhooyung.dto.LoginRequestDTO;
+import org.example.tobi.springbootsecurityhooyung.dto.LoginResponseDTO;
 import org.example.tobi.springbootsecurityhooyung.dto.SignupRequestDTO;
 import org.example.tobi.springbootsecurityhooyung.dto.SignupResponseDTO;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +29,8 @@ public class MemberAPIController {
         );
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO, HttpSession session) {
-//        return ResponseEntity.ok(
-//                memberService.signIn(signInRequestDTO.toMember(), session)
-//        );
-//    }
-
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        return null;
+    }
 }
