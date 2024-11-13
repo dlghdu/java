@@ -1,4 +1,5 @@
-package org.example.tobi.springbootsecurityhooyung.service;
+package org.example.tobi.springbootsecurityhooyung.Service;
+
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -17,23 +18,25 @@ public class MemberService {
         memberMapper.signUp(member);
     }
 
-    public LoginResponseDTO login(Member member, HttpSession session) {
+    public LoginResponseDTO signIn(Member member, HttpSession session) {
         Member getMember = memberMapper.Login(member.getUserId());
         if (getMember == null) {
-            return makeLoginRequestDTO(false, "존재하지 않는 회원입니다.", null, null);
+            return makeSignInRequestDTO(false, "존재하지 않는 회원입니다.", null, null);
         }
 
-        if ( !member.getPassword().equals(getMember.getPassword())) {
-            return makeLoginRequestDTO(false, "비밀번호가 틀렸습니다.", null, null);
+        if ( !member.getPassword().equals(getMember.getPassword()) ) {
+            return makeSignInRequestDTO(false, "비밀번호가 틀렸습니다.", null, null);
         }
 
+        // 세션 설정
         session.setAttribute("userId", getMember.getUserId());
         session.setAttribute("userName", getMember.getUserName());
 
-        return makeLoginRequestDTO(true, "로그인이 성공했습니다.", "/helo", member);
+        return makeSignInRequestDTO(true, "로그인이 성공했습니다.", "/", member);
     }
 
-    private LoginResponseDTO makeLoginRequestDTO(boolean isloggedIn, String message, String url, Member member) {
+
+    private LoginResponseDTO makeSignInRequestDTO(boolean isloggedIn, String message, String url, Member member) {
         return LoginResponseDTO.builder()
                 .isLoggedIn(isloggedIn)
                 .message(message)

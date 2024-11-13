@@ -5,7 +5,6 @@ import org.example.tobi.springbootsecurityhooyung.model.Member;
 
 @Mapper
 public interface MemberMapper {
-
     void signUp(Member member);
     Member Login(String userId);
 }

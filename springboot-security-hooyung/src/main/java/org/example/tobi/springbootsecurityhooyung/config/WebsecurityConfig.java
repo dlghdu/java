@@ -33,14 +33,15 @@ public class WebsecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
-                                        new AntPathRequestMatcher("/login"),
-                                        new AntPathRequestMatcher("/signup")
+                                        new AntPathRequestMatcher("/member/login"),
+                                        new AntPathRequestMatcher("/member/join"),
+                                        new AntPathRequestMatcher("/join")
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(
                         form -> form
-                                .loginPage("/login")
+                                .loginPage("/member/login")
                                 .loginProcessingUrl("/login")
                                 .successHandler(successHandler)
                                 .failureHandler(failureHandler)
@@ -48,7 +49,7 @@ public class WebsecurityConfig {
                 .logout(
                         logout -> logout
                                 .logoutUrl("/logout")
-                                .logoutSuccessUrl("/login")
+                                .logoutSuccessUrl("/member/login")
                 )
                 .csrf(AbstractHttpConfigurer::disable);
 

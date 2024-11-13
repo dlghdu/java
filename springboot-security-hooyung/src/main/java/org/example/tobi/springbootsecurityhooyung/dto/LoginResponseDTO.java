@@ -8,7 +8,7 @@ import lombok.Getter;
 public class LoginResponseDTO {
     private boolean isLoggedIn;
     private String url;
-    private String userId;
     private String userName;
+    private String userId;
     private String message;
 }

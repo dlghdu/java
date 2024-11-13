@@ -14,7 +14,9 @@
         VALUES (#{userId}, #{password}, #{userName});
     </insert>
 
-    <select id="Login" parameterType="String" resultMap="memberResultMap">
+    <select id="Login"
+            parameterType="String"
+            resultMap="memberResultMap">
         SELECT * FROM member WHERE user_id = #{userId};
     </select>
 

@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+
 import org.example.tobi.springbootsecurityhooyung.dto.LoginResponseDTO;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -26,7 +27,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         LoginResponseDTO build = LoginResponseDTO.builder()
                 .isLoggedIn(false)
                 .message("로그인 실패\n다시 로그인해주세요.")
-                .url("/login")
+                .url("/member/login")
                 .build();
 
         response.getWriter().write(objectMapper.writeValueAsString(build));
