@@ -31,14 +31,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         // 검증 로직
         String requestURI = request.getRequestURI();
         log.info("requestURI: {}", requestURI);
-        if (
-                "/member/login".equals(requestURI)
-                        || "/js/signIn.js".equals(requestURI)
-                        || "/css/signIn.css".equals(requestURI)
-        ) {
-            chain.doFilter(request, response);
-            return;
-        }
 
         String token = resolveToken(request);
         if (token == null) {
@@ -59,13 +51,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
 
         } else if (validateToken == 2) {
-
+            System.out.println(requestURI + " : " + validateToken);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-        } else if (validateToken == 3) {
-
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-
+            return;
         }
 
         chain.doFilter(request, response);

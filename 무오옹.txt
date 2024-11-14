@@ -3,7 +3,7 @@
 
 도커 다운로드 후
 로그인(?) 해서
-./gradlew boot BuildImage해서 이미지 몬가몬가 한다
+./gradlew bootBuildImage해서 이미지 몬가몬가 한다
 다 된다면 docker images로 확인
 catalogservice가 있는지 확인하자
 
@@ -27,3 +27,29 @@ docker log container id (-f 는 하고싶으면)
 cmd 에서 curl -X GET "http://localhost:81/"
 
 이거 해서 실행 시키자
+
+-----------------------------------
+
+docker images 하면 미니큐브 카탈로그서비스 있어야 함
+
+docker ps --> 미니큐브
+
+docker start [이미지 아이디]
+
+minikube status
+
+minikube start
+
+minikube image load catalogservice:0.0.1-SNAPSHOT
+
+kubectl create deployment catalogservice --image=catalogservice0.0.1-SNAPSHOT
+
+kubectl expose deployment catalogservice --name=catalogservice -- port=82 --target-port=8081
+
+kubectl port-forword service/catalogservice 8081:82
+
+kubectl delete service catalogservice
+
+kubectl get pods
+
+kubectl logs <pod_name>
