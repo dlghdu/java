@@ -103,6 +103,7 @@ public class BoardApiController {
     public ResponseEntity<String> deleteArticle(
             @PathVariable long id,
             @RequestBody BoardDeleteRequestDTO request
+            
     ) {
         boardService.deleteArticle(id, request);
         return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
