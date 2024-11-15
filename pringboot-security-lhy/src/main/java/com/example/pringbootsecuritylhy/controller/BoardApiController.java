@@ -52,7 +52,7 @@ public class BoardApiController {
                 .build();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or @boardService.isOwner(authentication.name, #id)")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER' and #id)")
     @GetMapping("/{id}")
     public BoardDetailResponseDTO getBoardDetail(@PathVariable long id) {
         Board boardDetail = boardService.getBoardDetail(id);

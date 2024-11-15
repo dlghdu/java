@@ -5,7 +5,7 @@ $(document).ready(() => {
     getUserInfo().then((userInfo) => {
         $('#hiddenUserId').val(userInfo.userId);
         $('#hiddenUserName').val(userInfo.userName);
-        $('#hiddenUseRole').val(userInfo.role);
+        $('#hiddenUserRole').val(userInfo.role);
         loadBoardDetail();
     }).catch((error) => {
         console.log('Error while fetching user info : ', error);
@@ -41,6 +41,7 @@ let deleteArticle = () => {
 let loadBoardDetail = () => {
     let hId = $('#hiddenId').val();
     let hUserId = $('#hiddenUserId').val();
+    let Role = $('hiddenUserRole').val();
     $.ajax({
         type: 'GET',
         url: '/api/board/' + hId,
@@ -52,9 +53,20 @@ let loadBoardDetail = () => {
             $('#userId').text(response.userId);
             $('#created').text(response.created);
 
+            // 예시: ROLE_ADMIN일 경우 수정/삭제 버튼 활성화
+            if ($('#hiddenUserRole').val() === 'ROLE_ADMIN') {
+                $('#editBtn').prop('disabled', false);
+                $('#deleteBtn').prop('disabled', false);
+            }
 
-
-
+            // 사용자 아이디가 다르면 접근 거부
+            if (hUserId != response.userId && $('#hiddenUserRole').val() === 'ROLE_USER') {
+                window.location.href = '/access-denied';  // 접근 거부 페이지로 리디렉션
+            } else {
+                // 사용자 아이디가 일치하면 수정/삭제 버튼 활성화
+                $('#editBtn').prop('disabled', false);
+                $('#deleteBtn').prop('disabled', false);
+            }
 
             // 파일 목록이 있는 경우 파일 다운로드 링크 추가
             if (response.filePath && response.filePath.length > 0) {
@@ -76,13 +88,3 @@ let loadBoardDetail = () => {
         }
     });
 };
-
-// JWT 토큰에서 역할 추출하는 함수
-function getRoleFromToken() {
-    const token = localStorage.getItem('jwt_token');  // 토큰을 로컬 스토리지에서 가져옴
-    if (!token) return null;
-
-    const payload = JSON.parse(atob(token.split('.')[1]));  // 토큰에서 페이로드 추출
-    return payload.role;  // 역할을 리턴
-}
-
