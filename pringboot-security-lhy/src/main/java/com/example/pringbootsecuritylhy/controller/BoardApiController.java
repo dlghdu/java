@@ -4,9 +4,11 @@ package com.example.pringbootsecuritylhy.controller;
 import com.example.pringbootsecuritylhy.dto.BoardDeleteRequestDTO;
 import com.example.pringbootsecuritylhy.dto.BoardDetailResponseDTO;
 import com.example.pringbootsecuritylhy.dto.BoardListResponseDTO;
+import com.example.pringbootsecuritylhy.mapper.MemberMapper;
 import com.example.pringbootsecuritylhy.model.Board;
 import com.example.pringbootsecuritylhy.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,8 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/board")
@@ -27,7 +31,7 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    //    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public BoardListResponseDTO getBoardList(
             @RequestParam(defaultValue = "1") int page,
@@ -48,7 +52,7 @@ public class BoardApiController {
                 .build();
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @boardService.isOwner(authentication.name, #id)")
     @GetMapping("/{id}")
     public BoardDetailResponseDTO getBoardDetail(@PathVariable long id) {
         Board boardDetail = boardService.getBoardDetail(id);

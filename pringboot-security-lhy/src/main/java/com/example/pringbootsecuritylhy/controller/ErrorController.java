@@ -8,7 +8,7 @@ public class ErrorController {
 
     @GetMapping("/access-denied")
     public String accessDenied() {
-        return "/access-denied";
+        return "accessdenied";
     }
 
 }

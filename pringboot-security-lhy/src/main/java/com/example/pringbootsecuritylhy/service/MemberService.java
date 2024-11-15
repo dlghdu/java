@@ -29,19 +29,23 @@ public class MemberService {
     }
 
     public SignInResponseDTO signIn(String username, String password) {
+        System.out.println("0");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
+
         );
+        System.out.println("1");
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        System.out.println("2");
         Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
-
+        System.out.println("3");
         // Access Token
         String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
+        System.out.println("access token:: " + accessToken);
 
         // Refresh Token
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(2));
-
+        System.out.println("4");
         return SignInResponseDTO.builder()
                 .isLoggedIn(true)
                 .message("로그인 성공")

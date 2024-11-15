@@ -16,10 +16,7 @@ public class BoardController {
     }
 
     @GetMapping("/detail")
-    public String detail(
-            @RequestParam("id") Long id,
-            Model model
-    ) {
+    public String detail(@RequestParam("id") Long id, Model model) {
         model.addAttribute("id", id);
         return "board-detail";
     }

@@ -8,11 +8,11 @@ spring:
     url: jdbc:mysql://localhost:3306/java_basic?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: akdptmzbdpf10299!!
+    password: 1234
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml
 
 jwt:
   issuer: test@naver.com
-  secret_key: 1CUkGbcRHun/pzZ7iX5GLk4AswnEZor6gz1bu9tkfL7bh7x9O40g34qgkdOoct3CyQLh8Rb0nQ5oVKhv2/Ojvw==
+  secret_key: qqsTf/MIE9HSGVwB2vKaDtC7hI3RLOYPUSs4okbySBsm8eJH/YufLAP5oa5t7tghQZ3cjNOhZmd/zpwEpvwbuw==

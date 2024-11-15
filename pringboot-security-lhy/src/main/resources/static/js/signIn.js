@@ -11,6 +11,8 @@ $(document).ready(() => {
            password : password
         }
 
+        console.log('formdata:: ', formData)
+
         $.ajax({
             type: 'POST',
             url: '/login', // 서버의 엔드포인트 URL

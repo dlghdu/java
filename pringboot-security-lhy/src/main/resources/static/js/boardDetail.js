@@ -5,7 +5,7 @@ $(document).ready(() => {
     getUserInfo().then((userInfo) => {
         $('#hiddenUserId').val(userInfo.userId);
         $('#hiddenUserName').val(userInfo.userName);
-        // $('#userId').val(userInfo.userName + '(' +userInfo.userId + ')');
+        $('#hiddenUseRole').val(userInfo.role);
         loadBoardDetail();
     }).catch((error) => {
         console.log('Error while fetching user info : ', error);
@@ -39,43 +39,50 @@ let deleteArticle = () => {
 }
 
 let loadBoardDetail = () => {
-
     let hId = $('#hiddenId').val();
     let hUserId = $('#hiddenUserId').val();
     $.ajax({
         type: 'GET',
         url: '/api/board/' + hId,
         success: (response) => {
-            console.log('/api/board/ ', response.userId)
-            console.log('/api/board/ ', hUserId)
+            console.log('/api/board/ ', response.userId);
+            console.log('/api/board/ ', hUserId);
             $('#title').text(response.title);
             $('#content').text(response.content);
             $('#userId').text(response.userId);
             $('#created').text(response.created);
 
-            if (hUserId != response.userId) {
-                $('#editBtn').prop('disabled', true);
-                $('#deleteBtn').prop('disabled', true);
-            }
 
-            // 파일 목록이 있는 경우, 파일 다운로드 링크 추가
+
+
+
+            // 파일 목록이 있는 경우 파일 다운로드 링크 추가
             if (response.filePath && response.filePath.length > 0) {
                 let filePath = response.filePath;
-                $('#hiddenFilePath').val(filePath)
+                $('#hiddenFilePath').val(filePath);
                 let fileName = filePath.substring(filePath.lastIndexOf('\\') + 1); // 파일명 추출
                 let fileElement = `
-                            <li>
-                                <a href="/api/board/file/download/${fileName}">${fileName}</a> <!-- 다운로드 링크 -->
-                            </li>`;
+                    <li>
+                        <a href="/api/board/file/download/${fileName}">${fileName}</a> <!-- 다운로드 링크 -->
+                    </li>`;
                 $('#fileList').append(fileElement);
             } else {
                 $('#fileList').append('<li>첨부된 파일이 없습니다.</li>');
             }
-
         },
         error: function (error) {
             console.error('오류 발생:', error);
             alert('상세 데이터를 불러오는데 오류가 발생했습니다.');
         }
     });
+};
+
+// JWT 토큰에서 역할 추출하는 함수
+function getRoleFromToken() {
+    const token = localStorage.getItem('jwt_token');  // 토큰을 로컬 스토리지에서 가져옴
+    if (!token) return null;
+
+    const payload = JSON.parse(atob(token.split('.')[1]));  // 토큰에서 페이로드 추출
+    return payload.role;  // 역할을 리턴
 }
+
