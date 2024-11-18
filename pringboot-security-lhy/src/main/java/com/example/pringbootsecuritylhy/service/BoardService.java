@@ -86,4 +86,10 @@ public class BoardService {
                         .build()
         );
     }
+
+    public boolean isOwner(String userId, Long boardId) {
+        Board board = getBoardDetail(boardId);
+        return board != null && board.getUserId().equals(userId);
+    }
+
 }
