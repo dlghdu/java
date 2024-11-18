@@ -5,7 +5,6 @@ $(document).ready(() => {
     getUserInfo().then((userInfo) => {
         $('#hiddenUserId').val(userInfo.userId);
         $('#hiddenUserName').val(userInfo.userName);
-        $('#hiddenUserRole').val(userInfo.role);
         loadBoardDetail();
     }).catch((error) => {
         console.log('Error while fetching user info : ', error);
@@ -41,32 +40,34 @@ let deleteArticle = () => {
 let loadBoardDetail = () => {
     let hId = $('#hiddenId').val();
     let hUserId = $('#hiddenUserId').val();
-    let Role = $('hiddenUserRole').val();
     $.ajax({
         type: 'GET',
         url: '/api/board/' + hId,
         success: (response) => {
             console.log('/api/board/ ', response.userId);
             console.log('/api/board/ ', hUserId);
+            console.log('/api/board/ ', hId);
             $('#title').text(response.title);
             $('#content').text(response.content);
             $('#userId').text(response.userId);
             $('#created').text(response.created);
 
-            // 예시: ROLE_ADMIN일 경우 수정/삭제 버튼 활성화
-            if ($('#hiddenUserRole').val() === 'ROLE_ADMIN') {
+
+            if (hUserId != response.userId) {
+                // 작성자가 본인이 아닐 때
+                $('#editBtn').prop('disabled', true);
+                $('#deleteBtn').prop('disabled', true);
+            } else {
+                // 작성자가 본인일 때
                 $('#editBtn').prop('disabled', false);
                 $('#deleteBtn').prop('disabled', false);
             }
 
-            // 사용자 아이디가 다르면 접근 거부
-            if (hUserId != response.userId && $('#hiddenUserRole').val() === 'ROLE_USER') {
-                window.location.href = '/access-denied';  // 접근 거부 페이지로 리디렉션
-            } else {
-                // 사용자 아이디가 일치하면 수정/삭제 버튼 활성화
-                $('#editBtn').prop('disabled', false);
-                $('#deleteBtn').prop('disabled', false);
+            if (hUserId !== response.userId) {
+                // 작성자가 본인이 아닌 경우 리디렉션
+                window.location.href = '/access-denied';
             }
+
 
             // 파일 목록이 있는 경우 파일 다운로드 링크 추가
             if (response.filePath && response.filePath.length > 0) {
@@ -82,9 +83,24 @@ let loadBoardDetail = () => {
                 $('#fileList').append('<li>첨부된 파일이 없습니다.</li>');
             }
         },
-        error: function (error) {
-            console.error('오류 발생:', error);
-            alert('상세 데이터를 불러오는데 오류가 발생했습니다.');
+        error: (xhr) => {
+            if (xhr.status === 401) {
+                alert("로그인이 필요합니다.");
+                window.location.href = "/member/login";
+            } else if (xhr.status === 403) {
+                window.location.href = "/access-denied"; // 권한 부족 시 접근 금지 페이지로 이동
+            } else {
+                alert("예기치 않은 오류가 발생했습니다.");
+            }
         }
     });
 };
+
+// JWT 토큰에서 역할 추출하는 함수
+function getRoleFromToken() {
+    const token = localStorage.getItem('jwt_token');  // 토큰을 로컬 스토리지에서 가져옴
+    if (!token) return null;
+
+    const payload = JSON.parse(atob(token.split('.')[1]));  // 토큰에서 페이로드 추출
+    return payload.role;  // 역할을 리턴
+}

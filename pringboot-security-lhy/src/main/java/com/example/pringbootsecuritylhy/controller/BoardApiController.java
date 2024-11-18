@@ -31,7 +31,6 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
-    //    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public BoardListResponseDTO getBoardList(
             @RequestParam(defaultValue = "1") int page,
@@ -52,8 +51,8 @@ public class BoardApiController {
                 .build();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER' and #id)")
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public BoardDetailResponseDTO getBoardDetail(@PathVariable long id) {
         Board boardDetail = boardService.getBoardDetail(id);
         return BoardDetailResponseDTO.builder()
