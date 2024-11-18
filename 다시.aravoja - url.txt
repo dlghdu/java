@@ -1,0 +1,5 @@
+get 으로 보여주고
+post로 만들고
+put으로 바꾸고
+delete로 지웡
+?는 get이로구나
