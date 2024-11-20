@@ -1,6 +1,9 @@
 services:
   # Applications
-  catalog-service:
+  catalog-service: 
+    build:
+      context: C:\Users\hi-pc-999\Desktop\java\catalogservice
+      dockerfile: Dockerfile   
     depends_on:
       - polar-mysql
     image: "catalog-service"
@@ -16,20 +19,7 @@ services:
       - BPL_DEBUG_PORT=8001
       # - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
       - SPRING_DATASOURCE_URL=jdbc:mysql://polar-mysql:3306/catalog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
-      - SPRING_PROFILES_ACTIVE=testdata
-  
-  config-service:
-    image: "config-service"
-    container_name: "config-service"
-    ports:
-      - 8888:8888
-      - 9888:9888
-    environment:
-      # Buildpacks environment variable to configure the number of threads in memory calculation
-      - BPL_JVM_THREAD_COUNT=50
-      # Buildpacks environment variable to enable debug through a socket on port 9888
-      - BPL_DEBUG_ENABLED=true
-      - BPL_DEBUG_PORT=9888
+      - SPRING_PROFILES_ACTIVE=testdata 
 
   # Backing Services
   polar-mysql:
@@ -39,6 +29,5 @@ services:
       - 3307:3306
     environment:
       - MYSQL_ROOT_PASSWORD=1234
-      - MYSQL_DATABASE=catalog
-      - MYSQL_USER=user       # 사용자 설정 추가
-      - MYSQL_PASSWORD=1234
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql

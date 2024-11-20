@@ -1,9 +1,11 @@
 spring:
   application:
     name: catalog-service-prod
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
       request-connect-timeout: 5000
       request-read-timeout: 5000
       fail-fast: true
@@ -17,7 +19,7 @@ spring:
     import: "optional:configserver:"
 
   datasource:
-    url: jdbc:mysql://localhost:3307/catalog?useSSL=false&&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/catalog?useSSL=false&&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: user
     password: 1234
@@ -39,6 +41,7 @@ server:
     threads:
       max: 50
       min-spare: 5
+  shutdown: graceful
 
 polar:
   greeting: Welcome to the local book catalog!
