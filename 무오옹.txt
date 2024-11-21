@@ -53,3 +53,20 @@ kubectl delete service catalogservice
 kubectl get pods
 
 kubectl logs <pod_name>
+
+------------------------------------
+minikube start --cpus 2 --memory 4g --driver docker --profile polar
+
+kubectl get nodes
+
+// services 있는 폴더 가서
+kubectl apply -f services
+
+docker compose up -d catalog-service
+
+docker images
+
+minikube image load catalog-service -- profile polar
+
+// catalog-service 폴더 가서
+kubectl apply -f k8s/deployment.yml
