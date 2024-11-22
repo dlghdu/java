@@ -67,7 +67,11 @@ docker compose up -d catalog-service
 
 docker images
 
-minikube image load catalog-service -- profile polar
+minikube image load catalog-service --profile polar
+
+minikube image load order-service --profile polar
+
+minikube image load edge-service --profile polar
 
 // catalog-service 폴더 가서
 kubectl apply -f k8s/deployment.yml
