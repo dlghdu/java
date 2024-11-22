@@ -43,6 +43,16 @@ services:
     ports:
       - 9000:9000
       - 8000:8000
+
+  hello-service:
+    build:
+      context: C:\Users\hi-pc-999\Desktop\java\hello-service
+      dockerfile: Dockerfile
+    image: "hello-service"
+    container_name: "hello-service"
+    ports:
+      - 8081:8081
+      - 8001:8001
     
   # Backing Services
   polar-mysql:

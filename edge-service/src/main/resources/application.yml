@@ -55,6 +55,10 @@ spring:
             - name: CircuitBreaker
               args:
                 name: orderCircuitBreaker
+        - id: hello-route
+          uri: ${HELLO_SERVICE_URL:http://localhost:8081}hihello
+          predicates:
+            - path=/hihello/**
 resilience4j:
   circuitbreaker:
     configs:
