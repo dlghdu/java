@@ -2,7 +2,7 @@ services:
   # Applications
   catalog-service: 
     build:
-      context: C:\Users\hi-pc-999\Desktop\java\catalogservice
+      context: C:\Users\배개양\Desktop\java\catalogservice
       dockerfile: Dockerfile   
     depends_on:
       - polar-mysql
@@ -24,7 +24,7 @@ services:
 
   order-service: 
     build:
-      context: C:\Users\hi-pc-999\Desktop\java\order-service
+      context: C:\Users\배개양\Desktop\java\order-service
       dockerfile: Dockerfile   
     depends_on:
       - polar-mysql
@@ -36,7 +36,7 @@ services:
 
   edge-service: 
     build:
-      context: C:\Users\hi-pc-999\Desktop\java\edge-service
+      context: C:\Users\배개양\Desktop\java\edge-service
       dockerfile: Dockerfile
     image: "edge-service"
     container_name: "edge-service"
@@ -46,7 +46,7 @@ services:
 
   hello-service:
     build:
-      context: C:\Users\hi-pc-999\Desktop\java\hello-service
+      context: C:\Users\배개양\Desktop\java\hello-service
       dockerfile: Dockerfile
     image: "hello-service"
     container_name: "hello-service"
