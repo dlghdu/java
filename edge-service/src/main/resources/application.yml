@@ -55,14 +55,10 @@ spring:
             - name: CircuitBreaker
               args:
                 name: orderCircuitBreaker
-        - id: hello-route
-          uri: ${HELLO_SERVICE_URL:http://localhost:8081}/hihello
-          predicates:
-            - Path=/hihello/**
         - id: web-front-admin-route
-          uri: ${WEB_FRONT_ADMIN_SERVICE_URL:http://localhost:8886}/admin
+          uri: ${WEB_FRONT_ADMIN_SERVICE_URL:http://web-front-admin-service:8886}/admin/
           predicates:
-            - Path=/admin/**
+            - Path=/admin/**, /css/**, /js/**
 resilience4j:
   circuitbreaker:
     configs:

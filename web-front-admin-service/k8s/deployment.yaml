@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-front-admin-service
+  labels:
+    app: web-front-admin-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-front-admin-service
+  template:
+    metadata:
+      labels:
+        app: web-front-admin-service
+    spec:
+      containers:
+        - name: web-front-admin-service
+          image: web-front-admin-service:latest  # 이미지 이름 확인
+          ports:
+            - containerPort: 8886  # 실제 사용 포트로 수정
