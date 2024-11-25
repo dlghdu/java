@@ -1,6 +1,11 @@
 spring:
   application:
     name: catalog-service-prod
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: 1234
   lifecycle:
     timeout-per-shutdown-phase: 15s
   cloud:
@@ -19,7 +24,7 @@ spring:
     import: "optional:configserver:"
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/catalog?useSSL=false&&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/catalog?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 1234

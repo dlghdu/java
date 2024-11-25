@@ -59,6 +59,10 @@ spring:
           uri: ${HELLO_SERVICE_URL:http://localhost:8081}/hihello
           predicates:
             - Path=/hihello/**
+        - id: web-front-admin-route
+          uri: ${WEB_FRONT_ADMIN_SERVICE_URL:http://localhost:8886}/admin
+          predicates:
+            - Path=/admin/**
 resilience4j:
   circuitbreaker:
     configs:
