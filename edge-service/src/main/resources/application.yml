@@ -56,9 +56,13 @@ spring:
               args:
                 name: orderCircuitBreaker
         - id: web-front-admin-route
-          uri: ${WEB_FRONT_ADMIN_SERVICE_URL:http://web-front-admin-service:8886}/admin/
+          uri: ${WEB_FRONT_ADMIN_SERVICE_URL:http://localhost:8886}/admin/
           predicates:
             - Path=/admin/**, /css/**, /js/**
+        - id: auth-route
+          uri: ${AUTH_SERVICE_URL:http://localhost:8787}/auths/
+          predicates:
+            - Path=/auths/**
 resilience4j:
   circuitbreaker:
     configs:
