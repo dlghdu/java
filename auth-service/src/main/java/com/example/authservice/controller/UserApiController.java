@@ -5,8 +5,6 @@ import com.example.authservice.dto.UserJoinResponseDTO;
 import com.example.authservice.dto.UserLoginRequestDTO;
 import com.example.authservice.dto.UserLoginResponseDTO;
 import com.example.authservice.service.UserService;
-import com.example.authservice.utils.CookieUtil;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,24 +24,15 @@ public class UserApiController {
 
     @PostMapping("/login")
     public UserLoginResponseDTO login(
-            HttpServletResponse response,
-            @RequestBody UserLoginRequestDTO loginRequest
-    ) {
+            @RequestBody UserLoginRequestDTO loginRequest) {
         log.info("login");
-        UserLoginResponseDTO logined = userService.login(loginRequest.getUserId(), loginRequest.getPassword());
-
-        CookieUtil.addCookie(response, "refreshToken", logined.getRefreshToken(), 7 * 24 * 60 * 60);
-        logined.setRefreshToken(null);
-
-        return logined;
+        return userService.login(loginRequest.getUserId(), loginRequest.getPassword());
     }
 
     @PostMapping("/join")
     public UserJoinResponseDTO join(@RequestBody UserJoinRequestDTO joinRequest) {
         log.info("join :: {}", joinRequest);
-        return userService.join( joinRequest.touser(bCryptPasswordEncoder) );
+        return userService.join( joinRequest.toUser(bCryptPasswordEncoder) );
     }
-
-
 
 }

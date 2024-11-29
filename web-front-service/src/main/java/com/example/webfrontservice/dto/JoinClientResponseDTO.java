@@ -7,11 +7,10 @@ public class JoinClientResponseDTO {
 
     private boolean isSuccess;
 
-    public JoinResponseDTO tojoinResponseDTO() {
+    public JoinResponseDTO toJoinResponseDTO() {
         return JoinResponseDTO.builder()
                 .isSuccess(isSuccess)
-                .url(isSuccess ? "/webs/login" : "webs/join")
+                .url(isSuccess ? "/webs/login" : "/webs/join")
                 .build();
     }
-
 }

@@ -18,4 +18,5 @@ public class WebEndpoints {
                 .POST("/catalog-fallback", request -> ServerResponse.status(HttpStatus.SERVICE_UNAVAILABLE).build())
                 .build();
     }
+
 }

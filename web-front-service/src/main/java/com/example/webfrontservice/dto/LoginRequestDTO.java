@@ -1,9 +1,9 @@
-package com.example.authservice.dto;
+package com.example.webfrontservice.dto;
 
 import lombok.Getter;
 
 @Getter
-public class UserLoginRequestDTO {
+public class LoginRequestDTO {
     private String userId;
     private String password;
 }

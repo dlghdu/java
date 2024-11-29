@@ -1,10 +1,9 @@
-package org.example.tobi.edgeservice.filter;
+package org.example.tobi.edgeservice.config.filter;
 
+import org.example.tobi.edgeservice.config.client.AuthServiceClient;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.example.tobi.edgeservice.config.client.AuthServiceClient;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.annotation.Order;
@@ -30,11 +29,13 @@ public class PreGatewayFilter extends AbstractGatewayFilterFactory<PreGatewayFil
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             log.info("token: {}", token);
+
             // 토큰 유효성 검사
-            if (token != null && token.startsWith(config.getTokenPrefix())) {
+            if (token != null && !token.startsWith(config.getTokenPrefix())) {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             }
+
             return authServiceClient.validToken(token)
                     .flatMap(statusNum -> {
                         if (statusNum == 2) {
@@ -42,7 +43,9 @@ public class PreGatewayFilter extends AbstractGatewayFilterFactory<PreGatewayFil
                             return exchange.getResponse().setComplete();
                         } else if (statusNum == 3 || statusNum == -1) {
                             exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+                            return exchange.getResponse().setComplete();
                         }
+
                         return chain.filter(exchange);
                     })
                     .onErrorResume(e -> {

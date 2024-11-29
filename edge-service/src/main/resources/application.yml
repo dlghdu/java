@@ -61,15 +61,9 @@ spring:
           predicates:
             - Path=/auths/**
           filters:
-            - name: PreGatewayFilter
             - name: CircuitBreaker
               args:
                 name: authCircuitBreaker
-        - id: web-front-route
-          uri: ${WEB_FRONT_SERVICE_URL:http://localhost:8886}/webs
-          predicates:
-            - Path=/webs/**
-
 
 resilience4j:
   circuitbreaker:

@@ -16,9 +16,11 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/auth?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8}
+
   mybatis:
     mapper-locations: classpath:mappers/*.xml
-    type-aliases-package: com.example.spring.authservice.model # DB의 user 테이블은 여기에서 찾아간다.
+    type-aliases-package: com.example.authservice.model # DB의 user 테이블은 여기에서 찾아간다.
+
 jwt:
   issuer: fhrmsl12@gmail.com
   secret_key: qqsTf/MIE9HSGVwB2vKaDtC7hI3RLOYPUSs4okbySBsm8eJH/YufLAP5oa5t7tghQZ3cjNOhZmd/zpwEpvwbuw==
