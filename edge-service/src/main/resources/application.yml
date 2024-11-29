@@ -18,7 +18,6 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - SaveSession
         - name: Retry
           args:
             retries: 3
@@ -43,6 +42,7 @@ spring:
           predicates:
             - Path=/books/**
           filters:
+            - name: PreGatewayFilter
             - name: CircuitBreaker
               args:
                 name: catalogCircuitBreaker
@@ -52,17 +52,25 @@ spring:
           predicates:
             - Path=/orders/**
           filters:
+            - name: PreGatewayFilter
             - name: CircuitBreaker
               args:
                 name: orderCircuitBreaker
-        - id: web-front-admin-route
-          uri: ${WEB_FRONT_ADMIN_SERVICE_URL:http://localhost:8886}/admin/
-          predicates:
-            - Path=/admin/**, /css/**, /js/**
         - id: auth-route
-          uri: ${AUTH_SERVICE_URL:http://localhost:8787}/auths/
+          uri: ${AUTH_SERVICE_URL:http://localhost:8886}/auths
           predicates:
             - Path=/auths/**
+          filters:
+            - name: PreGatewayFilter
+            - name: CircuitBreaker
+              args:
+                name: authCircuitBreaker
+        - id: web-front-route
+          uri: ${WEB_FRONT_SERVICE_URL:http://localhost:8886}/webs
+          predicates:
+            - Path=/webs/**
+
+
 resilience4j:
   circuitbreaker:
     configs:
@@ -75,3 +83,6 @@ resilience4j:
     configs:
       default:
         timeout-duration: 5s
+
+polar:
+  auth-service-url: ${AUTH_SERVICE_URL:http://localhost:8886}/auths
